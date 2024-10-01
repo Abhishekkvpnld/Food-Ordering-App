@@ -12,8 +12,8 @@ app.use(cors());
 
 // Routes
 app.get("/", (req: Request, res: Response) => {
-  res.send("Server running...");
-});
+  res.send("Server running...🚀🚀");
+}); 
 
 // Server
 const PORT = process.env.PORT || 4000;
