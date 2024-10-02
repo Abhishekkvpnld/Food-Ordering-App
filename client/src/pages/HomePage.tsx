@@ -1,6 +1,6 @@
+import Footer from "@/components/Footer";
 import HomeImg from "@/components/HomeImg";
 import { BsSearch } from "react-icons/bs";
-
 
 const HomePage = () => {
   return (
@@ -12,15 +12,30 @@ const HomePage = () => {
           Fast & Fresh Delivery
         </h1>
         <p className="text-md">Deliciousness at Your Doorstep!</p>
-        <div className="w-[100%] rounded-2xl flex items-center justify-start px-4  gap-5 bg-slate-200">
-            <BsSearch className="hover:scale-110 hover:text-blue-700 hover:font-semibold"/>
-          <input placeholder="search items here..." type="text" name="search" id="search" className="w-full h-10 bg-slate-200" />
+        <div className="w-[100%] rounded-3xl flex items-center justify-start px-4  gap-5 bg-slate-200">
+          <BsSearch className="hover:scale-110 hover:text-blue-700 hover:font-semibold" />
+          <input
+            placeholder="search items here..."
+            type="text"
+            name="search"
+            id="search"
+            className="w-full h-10 bg-slate-200"
+          />
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-5">
-        <img src="" alt="img" />
+      <div className="grid md:grid-cols-2 gap-5 px-1 mb-14">
+        <img src="/landingImg.avif" alt="img" className="mix-blend-multiply shadow-lg" />
+        <div className="flex items-center justify-center flex-col gap-1">
+          <h3 className="text-3xl font-semibold">Order-Take-away-even-faster</h3>
+          <p className="text-sm"> Download our mobile app for quick and easy ordering!</p>
+          <div className="">
+            <img src="/downloadImg.png" alt="img" />
+          </div>
+        </div>
       </div>
+
+      <Footer/>
     </div>
   );
 };
