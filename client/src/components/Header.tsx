@@ -4,11 +4,11 @@ import MainNav from "./MainNav";
 
 const Header = () => {
   return (
-    <div className="py-4 border-b-2 border-b-orange-500 px-4">
+    <div className="py-4 border-b-2 px-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link
           to={"/"}
-          className="text-3xl font-bold tracking-tight text-orange-600"
+          className="text-3xl font-bold tracking-tight text-green-600"
         >
           DeliGo
         </Link>
