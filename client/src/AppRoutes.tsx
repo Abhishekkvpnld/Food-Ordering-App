@@ -3,11 +3,14 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import Layouts from "../src/layouts/Layouts";
+
+
 
 const AppRoutes = () => {
   return (
       <Routes>
-        <Route path="/" element={<span>Home</span>} />
+        <Route path="/" element={<Layouts>Home</Layouts>} />
         <Route path="/login" element={<span>login</span>} />
         <Route path="/signup" element={<span>signup</span>} />
         <Route path="/user-profile" element={<span>user profile</span>} />
