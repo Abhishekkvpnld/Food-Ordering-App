@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 
-// Define an async function to connect to the database
+
 const dbConnection = async (): Promise<void> => {
   try {
-    // Ensure the MongoDB URI is available in the environment variables
     const mongoUri = process.env.MONGODB_LOCAL_URI;
     
     if (!mongoUri) {
