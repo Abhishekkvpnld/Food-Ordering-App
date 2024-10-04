@@ -15,20 +15,20 @@ const UsernameMenu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger >
+      <DropdownMenuTrigger className="flex items-center justify-center gap-2 font-semibold">
         <CircleUserRound />
         {user?.name}
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent>
+      <DropdownMenuContent className="flex item items-center justify-center gap-2 flex-col flex-1 bg-gray-300 rounded-md py-3 px-4 ml-8">
         <DropdownMenuItem>
-          <Link to={"/user-profile"}>User Profile</Link>
+          <Link to={"/user-profile"} className="font-semibold">User Profile</Link>
         </DropdownMenuItem>
 
         <Separator />
 
         <DropdownMenuItem>
-          <Button onClick={() => logout()}>Logout</Button>
+          <Button className="text-white bg-red-700" onClick={() => logout()}>Logout</Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
