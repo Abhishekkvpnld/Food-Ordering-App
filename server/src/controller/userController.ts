@@ -30,3 +30,26 @@ export const currentUser = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const updateCurrentUser = async (req: Request, res: Response) => {
+  try {
+    const { name, addressLine1, city, country } = req.body;
+
+    const user = await User.findById(req?.userId);
+    if (!user) throw new Error("User not found...🤦‍♂️");
+
+    user.name = name;
+    user.city = city;
+    user.addressLine1 = addressLine1;
+    user.country = country;
+
+    await user.save();
+
+  } catch (error) {
+    res.status(500).json({
+      error: true,
+      success: false,
+      message: (error as Error).message,
+    });
+  }
+};
