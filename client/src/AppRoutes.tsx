@@ -6,6 +6,7 @@ import {
 import Layouts from "../src/layouts/Layouts";
 import HomePage from "./pages/HomePage";
 import AuthCallbackPage from "./pages/AuthCallbackPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 
 
@@ -14,9 +15,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/auth-callback" element={<AuthCallbackPage/>}/>
         <Route path="/" element={<Layouts><HomePage/></Layouts>} />
-        <Route path="/login" element={<span>login</span>} />
-        <Route path="/signup" element={<span>signup</span>} />
-        <Route path="/user-profile" element={<span>user profile</span>} />
+        <Route path="/user-profile" element={<Layouts><UserProfilePage/></Layouts>} />
         <Route path="*" element={<Navigate to={"/"} />} />
       </Routes>
   );
