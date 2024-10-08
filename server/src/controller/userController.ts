@@ -1,6 +1,27 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
 
+export const getCurrentUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+
+    const currentUser = await User.findOne({ _id: userId });
+    if (!currentUser) throw new Error("User not found...🤦");
+
+     res.status(200).json({
+      success: true,
+      error: false,
+      data: currentUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: true,
+      success: false,
+      message: (error as Error).message,
+    });
+  }
+};
+
 export const currentUser = async (req: Request, res: Response) => {
   try {
     const { auth0Id } = req.body;
@@ -45,6 +66,11 @@ export const updateCurrentUser = async (req: Request, res: Response) => {
 
     await user.save();
 
+    res.status(200).json({
+      success: true,
+      error: false,
+      message: "User profile updated...✅",
+    });
   } catch (error) {
     res.status(500).json({
       error: true,

@@ -1,8 +1,42 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { toast } from "sonner";
+import {User} from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+export const useGetCurrentUser = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const getCurrentUserRequest = async ():Promise<User> => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await axios.get(`${API_BASE_URL}/api/user/get-user`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response?.data?.success) throw new Error("Failed to fetch user...❌");
+
+    return response?.data?.data;
+  };
+
+  const {
+    data: CurrentUser,
+    error,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useQuery("fetchCurrentUser", getCurrentUserRequest);
+
+  if (error) {
+    toast.error(error.toString());
+  }
+
+  return { CurrentUser, isLoading };
+};
 
 type CreateUserRequest = {
   auth0Id: string;
@@ -80,12 +114,21 @@ export const useUpdateProfile = () => {
     reset,
   } = useMutation(updateUserRequest);
 
+  if (isSuccess) {
+    toast.success("User profile updated...✅");
+  }
+
+  if (error) {
+    toast.error(error.toString());
+    reset();
+  }
+
   return {
     updateUser,
     isError,
     isLoading,
     error,
     reset,
-    isSuccess
-  }
+    isSuccess,
+  };
 };
