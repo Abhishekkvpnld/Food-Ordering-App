@@ -7,7 +7,7 @@ export const createRestaurant = async (req: Request, res: Response) => {
   try {
     const userId = req.userId;
 
-    const existingRestaurant = await Restaurant.find({ user: userId });
+    const existingRestaurant = await Restaurant.findOne({ user: userId });
 
     if (existingRestaurant)
       throw new Error("User restaurant already exists...❌");
