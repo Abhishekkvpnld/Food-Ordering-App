@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import AuthCallbackPage from "./pages/AuthCallbackPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import ProtectedRoute from "./Auth/ProtectedRoute";
+import ManageRestaurantForm from "./form/manage-restaurant-form/ManageRestaurantForm";
 
 const AppRoutes = () => {
   return (
@@ -27,6 +28,7 @@ const AppRoutes = () => {
           }
         />
       </Route>
+      <Route path="/restaurant" element={<ManageRestaurantForm onSave={()=>""} isLoading={false}/>} />
       <Route path="*" element={<Navigate to={"/"} />} />
     </Routes>
   );
