@@ -20,15 +20,27 @@ const UsernameMenu = () => {
         {user?.name}
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="flex item items-center justify-center gap-2 flex-col flex-1 bg-gray-300 rounded-md py-3 px-4 ml-8">
+      <DropdownMenuContent className="flex mt-2 item items-center justify-center gap-2 flex-col flex-1 bg-gray-300 rounded-md py-3 px-4 ml-8">
         <DropdownMenuItem>
-          <Link to={"/user-profile"} className="font-semibold">User Profile</Link>
+          <Link to={"/user-profile"} className="font-semibold">
+            User Profile
+          </Link>
         </DropdownMenuItem>
 
         <Separator />
 
         <DropdownMenuItem>
-          <Button className="text-white bg-red-700" onClick={() => logout()}>Logout</Button>
+          <Link to={"/manage-restaurant"} className="font-semibold">
+            Manage Restaurant
+          </Link>
+        </DropdownMenuItem>
+
+        <Separator />
+
+        <DropdownMenuItem>
+          <Button className="text-white bg-red-700" onClick={() => logout()}>
+            Logout
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

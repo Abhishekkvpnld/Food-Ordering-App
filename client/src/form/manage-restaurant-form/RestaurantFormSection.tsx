@@ -5,8 +5,9 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from "./ui/form";
-import { Input } from "./ui/input";
+  FormMessage,
+} from "../../components/ui/form";
+import { Input } from "../../components/ui/input";
 
 const RestaurantFormSection = () => {
   const { control } = useFormContext();
@@ -14,7 +15,7 @@ const RestaurantFormSection = () => {
   return (
     <div>
       <div>
-        <h2>Restaurant Details</h2>
+        <h2 className="font-bold text-2xl">Restaurant Details</h2>
         <FormDescription>Provide your restaurant's information</FormDescription>
       </div>
 
@@ -22,7 +23,7 @@ const RestaurantFormSection = () => {
         control={control}
         name={"restaurantName"}
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="mt-4">
             <FormLabel>Restaurant Name</FormLabel>
             <FormControl>
               <Input
@@ -31,16 +32,17 @@ const RestaurantFormSection = () => {
                 placeholder="Enter restaurant name..."
               />
             </FormControl>
+            <FormMessage/>
           </FormItem>
         )}
       />
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 w-full">
         <FormField
           control={control}
           name={"city"}
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex-1">
               <FormLabel>City</FormLabel>
               <FormControl>
                 <Input
@@ -49,6 +51,7 @@ const RestaurantFormSection = () => {
                   placeholder="Enter city..."
                 />
               </FormControl>
+              <FormMessage/>
             </FormItem>
           )}
         />
@@ -57,15 +60,16 @@ const RestaurantFormSection = () => {
           control={control}
           name={"country"}
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex-1">
               <FormLabel>Country</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  className="bg-white"
-                  placeholder="Enter country name..."
+                  className="bg-white flex-1"
+                  placeholder="Enter country..."
                 />
               </FormControl>
+              <FormMessage/>
             </FormItem>
           )}
         />
