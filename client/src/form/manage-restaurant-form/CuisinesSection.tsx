@@ -12,7 +12,7 @@ const CuisinesSection = () => {
   const { control } = useFormContext();
 
   return (
-    <div>
+    <div className="pt-5">
       <div>
         <h2 className="font-bold text-2xl">Cuisines</h2>
         <FormDescription>
@@ -26,8 +26,8 @@ const CuisinesSection = () => {
         render={({ field }) => (
           <FormItem>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-1">
-              {cuisinesList.map((cuisineItem) => (
-                <CuisinesCheckBox cuisine={cuisineItem} field={field} />
+              {cuisinesList.map((cuisineItem,index) => (
+                <CuisinesCheckBox key={index} cuisine={cuisineItem} field={field} />
               ))}
             </div>
             <FormMessage />
