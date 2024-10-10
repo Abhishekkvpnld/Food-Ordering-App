@@ -6,6 +6,9 @@ import { z } from "zod";
 import { Separator } from "@radix-ui/react-separator";
 import CuisinesSection from "./CuisinesSection";
 import MenuSection from "./MenuSection";
+import ImageSection from "./ImageSection";
+import LoadingButton from "@/components/LoadingButton";
+import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   restaurantName: z.string({
@@ -64,8 +67,29 @@ const ManageRestaurantForm = ({ onSave, isLoading }: Props) => {
         <RestaurantFormSection />
         <Separator />
         <CuisinesSection />
-        <Separator/>
-        <MenuSection/>
+        <Separator />
+        <MenuSection />
+        <Separator />
+        <ImageSection />
+        <div className="flex flex-col items-center gap-5 justify-center p-3">
+          <div className="border-gray-400 border-2 border-dashed justify-centerborder-dashed p-4 flex items-center justify-center">
+            <img
+              src="/upload.svg"
+              alt="Upload image"
+              className=" mix-blend-multiply transition-transform duration-300 ease-in-out hover:scale-105 w-[70%]"
+            />
+          </div>
+          <p className="underline">
+            Choose an image to upload for your restaurant's display.
+          </p>
+        </div>
+        {isLoading ? (
+          <LoadingButton />
+        ) : (
+          <Button type="submit" className="px-16">
+            Submit
+          </Button>
+        )}
       </form>
     </Form>
   );

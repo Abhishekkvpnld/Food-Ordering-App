@@ -25,6 +25,7 @@ const MenuSection = () => {
           <FormItem className="flex flex-col gap-2">
             {fields.map((_, index) => (
               <MenuItemInput
+                key={index}
                 index={index}
                 removeMenuItem={() => remove(index)}
               />
@@ -33,7 +34,11 @@ const MenuSection = () => {
         )}
       />
 
-      <Button type="button" className="bg-green-700 text-white hover:bg-green-800 mt-2" onClick={() => append({ name: "", price: "" })}>
+      <Button
+        type="button"
+        className="bg-green-700 text-white hover:bg-green-800 mt-2"
+        onClick={() => append({ name: "", price: "" })}
+      >
         Add Menu Item
       </Button>
     </div>
