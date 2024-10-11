@@ -29,7 +29,7 @@ function ImageSection() {
             <FormItem>
               <FormControl>
                 <Input
-                  className="bg-white"
+                  className="bg-blue-200"
                   type="file"
                   accept=".jpg, .png, .jpeg"
                   onChange={(event) =>

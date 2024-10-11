@@ -13,7 +13,7 @@ const RestaurantFormSection = () => {
   const { control } = useFormContext();
 
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <div>
         <h2 className="font-bold text-2xl">Restaurant Details</h2>
         <FormDescription>Provide your restaurant's information</FormDescription>
@@ -32,7 +32,7 @@ const RestaurantFormSection = () => {
                 placeholder="Enter restaurant name..."
               />
             </FormControl>
-            <FormMessage/>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -51,7 +51,7 @@ const RestaurantFormSection = () => {
                   placeholder="Enter city..."
                 />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -69,7 +69,45 @@ const RestaurantFormSection = () => {
                   placeholder="Enter country..."
                 />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="flex gap-3 w-full">
+        <FormField
+          control={control}
+          name={"deliveryPrice"}
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <FormLabel>Delivery Price (&#8377;)</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="bg-white"
+                  placeholder="Enter delivery Price..."
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name={"estimatedDeliveryTime"}
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <FormLabel>Estimated Delivery Time</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="bg-white flex-1"
+                  placeholder="Enter estimated delivery time..."
+                />
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
