@@ -31,8 +31,30 @@ export const createRestaurant = async (req: Request, res: Response) => {
       success: true,
       error: false,
       message: "Restaurant created successfully...✅",
-      data:restaurant
+      data: restaurant,
     });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: true,
+      message: (error as Error).message,
+    });
+  }
+};
+
+export const getRestaurant = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+
+    const restaurant = await Restaurant.findOne({ user: userId });
+    if (!restaurant) 
+      throw new Error("Restaurant not found...🤦‍♂️");
+  
+    res.status(201).json({
+      success:true,
+      error:false,
+      data:restaurant
+    })
   } catch (error) {
     res.status(500).json({
       success: false,

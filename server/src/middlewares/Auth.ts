@@ -33,6 +33,7 @@ export const jwtParse = async (
       throw new Error("Authentication failed...🔐");
 
     const token = authorization?.split(" ")[1];
+    console.log("'✅✅✅✅✅'",token)
     const decode = jwt.decode(token) as jwt.JwtPayload;
 
     const auth0Id = decode.sub;

@@ -1,6 +1,9 @@
 import express from "express";
 import multer from "multer";
-import { createRestaurant } from "../controller/restaurantController";
+import {
+  createRestaurant,
+  getRestaurant,
+} from "../controller/restaurantController";
 import { jwtCheck, jwtParse } from "../middlewares/Auth";
 import { validateRestaurantRequest } from "../middlewares/validation";
 
@@ -10,9 +13,12 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 5 * 1024 * 1024,
+    fileSize: 5 * 1024 * 1024, 
   },
 });
+
+// api/restaurant/
+router.get("/get-restaurant", jwtCheck, jwtParse, getRestaurant);
 
 router.post(
   "/create-restaurant",
@@ -21,6 +27,6 @@ router.post(
   jwtCheck,
   jwtParse,
   createRestaurant
-);  
+);
 
 export default router;
