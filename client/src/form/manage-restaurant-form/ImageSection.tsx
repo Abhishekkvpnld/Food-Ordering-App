@@ -1,3 +1,4 @@
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   FormControl,
   FormDescription,
@@ -9,7 +10,9 @@ import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
 
 function ImageSection() {
-  const { control } = useFormContext();
+  const { control,watch } = useFormContext();
+
+  const existingImage = watch("imageUrl")
 
   return (
     <div className="pt-5">
@@ -22,6 +25,13 @@ function ImageSection() {
       </div>
 
       <div className="flex flex-col gap-4 w-[70%] mt-3">
+        {
+          existingImage && (
+            <AspectRatio ratio={16/9}>
+              <img src={existingImage} alt="img" className="w-[250px] h-[100px] md:w-[330px] md:h-[200px] rounded-lg object-cover" />
+            </AspectRatio>
+          )
+        }
         <FormField
           name="imageFile"
           control={control}
