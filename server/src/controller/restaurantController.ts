@@ -72,7 +72,6 @@ export const getRestaurant = async (req: Request, res: Response) => {
 export const updateRestaurant = async (req: Request, res: Response) => {
   try {
     const userId = req.userId;
-    const body = req.body;
 
     const restaurant = await Restaurant.findOne({ user: userId });
     if (!restaurant) throw new Error("Restaurant not found...❌");
@@ -84,9 +83,9 @@ export const updateRestaurant = async (req: Request, res: Response) => {
     restaurant.estimatedDeliveryTime = req.body.estimatedDeliveryTime;
     restaurant.cuisines = req.body.cuisines;
     restaurant.menuItems = req.body.menuItems;
-    restaurant.lastUpdated = req.body.lastUpdated;
+    restaurant.lastUpdated = new Date();
 
-    if (req.body) {
+    if (req.file) {
       const imageUrl = await uploadImage(req.file as Express.Multer.File);
       restaurant.imageUrl = imageUrl;
     }
@@ -97,6 +96,7 @@ export const updateRestaurant = async (req: Request, res: Response) => {
       success: true,
       error: false,
       message: "Restaurant data updated...✅",
+      data:restaurant
     });
   } catch (error) {
     res.status(500).json({
