@@ -3,6 +3,7 @@ import multer from "multer";
 import {
   createRestaurant,
   getRestaurant,
+  updateRestaurant,
 } from "../controller/restaurantController";
 import { jwtCheck, jwtParse } from "../middlewares/Auth";
 import { validateRestaurantRequest } from "../middlewares/validation";
@@ -13,7 +14,7 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, 
+    fileSize: 5 * 1024 * 1024,
   },
 });
 
@@ -27,6 +28,14 @@ router.post(
   jwtCheck,
   jwtParse,
   createRestaurant
+);
+
+router.put(
+  "/update-restaurant",
+  upload.single("imageFile"),
+  jwtCheck,
+  jwtParse,
+  updateRestaurant
 );
 
 export default router;

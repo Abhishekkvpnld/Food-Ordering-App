@@ -3,6 +3,19 @@ import { Request, Response } from "express";
 import Restaurant from "../models/restaurant";
 import mongoose from "mongoose";
 
+const uploadImage = async (file: Express.Multer.File) => {
+  const image = file;
+  const base64Image = Buffer.from(image.buffer).toString("base64");
+  const dataURI = `data:${image.mimetype};base64,${base64Image}`;
+
+  // Upload the image to a specific folder on Cloudinary
+  const uploadImage = await cloudinary.v2.uploader.upload(dataURI, {
+    folder: "Food-Delivery-App",
+  });
+
+  return uploadImage.url;
+};
+
 export const createRestaurant = async (req: Request, res: Response) => {
   try {
     const userId = req.userId;
@@ -12,18 +25,11 @@ export const createRestaurant = async (req: Request, res: Response) => {
     if (existingRestaurant)
       throw new Error("User restaurant already exists...❌");
 
-    const image = req.file as Express.Multer.File;
-    const base64Image = Buffer.from(image.buffer).toString("base64");
-    const dataURI = `data:${image.mimetype};base64,${base64Image}`;
-
-    // Upload the image to a specific folder on Cloudinary
-    const uploadImage = await cloudinary.v2.uploader.upload(dataURI, {
-      folder: "Food-Delivery-App",
-    });
+    const imageUrl = await uploadImage(req.file as Express.Multer.File);
 
     const restaurant = new Restaurant(req.body);
     restaurant.user = new mongoose.Types.ObjectId(req.userId);
-    restaurant.imageUrl = uploadImage.url;
+    restaurant.imageUrl = imageUrl;
     restaurant.lastUpdated = new Date();
     restaurant.save();
 
@@ -47,14 +53,51 @@ export const getRestaurant = async (req: Request, res: Response) => {
     const userId = req.userId;
 
     const restaurant = await Restaurant.findOne({ user: userId });
-    if (!restaurant) 
-      throw new Error("Restaurant not found...🤦‍♂️");
-  
+    if (!restaurant) throw new Error("Restaurant not found...🤦‍♂️");
+
     res.status(201).json({
-      success:true,
-      error:false,
-      data:restaurant
-    })
+      success: true,
+      error: false,
+      data: restaurant,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: true,
+      message: (error as Error).message,
+    });
+  }
+};
+
+export const updateRestaurant = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    const body = req.body;
+
+    const restaurant = await Restaurant.findOne({ user: userId });
+    if (!restaurant) throw new Error("Restaurant not found...❌");
+
+    restaurant.restaurantName = req.body.restaurantName;
+    restaurant.city = req.body.city;
+    restaurant.country = req.body.country;
+    restaurant.deliveryPrice = req.body.deliveryPrice;
+    restaurant.estimatedDeliveryTime = req.body.estimatedDeliveryTime;
+    restaurant.cuisines = req.body.cuisines;
+    restaurant.menuItems = req.body.menuItems;
+    restaurant.lastUpdated = req.body.lastUpdated;
+
+    if (req.body) {
+      const imageUrl = await uploadImage(req.file as Express.Multer.File);
+      restaurant.imageUrl = imageUrl;
+    }
+
+    await restaurant.save();
+
+    res.status(200).json({
+      success: true,
+      error: false,
+      message: "Restaurant data updated...✅",
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
