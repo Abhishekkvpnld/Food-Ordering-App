@@ -96,7 +96,7 @@ export const updateRestaurant = async (req: Request, res: Response) => {
       success: true,
       error: false,
       message: "Restaurant data updated...✅",
-      data:restaurant
+      data: restaurant,
     });
   } catch (error) {
     res.status(500).json({
