@@ -16,7 +16,19 @@ export const searchRestaurant = async (req: Request, res: Response) => {
     const checkCity = await Restaurant.countDocuments(query);
 
     if (checkCity === 0) {
-      res.status(404).json([]);
+      res.status(404).json({
+        success: false,
+        error: true,
+        message: "",
+        data: {
+          restaurants: [],
+          pagination: {
+            total: 0,
+            page: 1,
+            pages: 1,
+          },
+        },
+      });
     }
 
     if (selectedCuisines) {
