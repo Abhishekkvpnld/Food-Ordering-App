@@ -15,21 +15,7 @@ export const searchRestaurant = async (req: Request, res: Response) => {
     query["city"] = new RegExp(city, "i");
     const checkCity = await Restaurant.countDocuments(query);
 
-    if (checkCity === 0) {
-      res.status(404).json({
-        success: false,
-        error: true,
-        message: "",
-        data: {
-          restaurants: [],
-          pagination: {
-            total: 0,
-            page: 1,
-            pages: 1,
-          },
-        },
-      });
-    }
+    if (checkCity === 0) throw new Error("Restaurant not found...✅");
 
     if (selectedCuisines) {
       const cuisinesArray = selectedCuisines
@@ -65,18 +51,25 @@ export const searchRestaurant = async (req: Request, res: Response) => {
       data: {
         restaurants,
         pagination: {
-          total,
+          total:total,
           page,
           pages: Math.ceil(total / pageSize),
         },
       },
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       success: false,
       error: true,
       message: (error as Error).message,
+      data: {
+        restaurants: [],
+        pagination: {
+          total: 0,
+          page: 1,
+          pages: 1,
+        },
+      },
     });
   }
 };

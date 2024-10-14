@@ -5,9 +5,9 @@ import { searchRestaurant } from "../controller/allrestaurantController";
 const router = express.Router();
 
 //api/allRestaurant/
-router.post(
+router.get(
   "/search/:city",
-  param("city")
+  param("city") 
     .isString()
     .trim()
     .notEmpty()

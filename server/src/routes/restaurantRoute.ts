@@ -36,6 +36,6 @@ router.put(
   jwtCheck,
   jwtParse,
   updateRestaurant
-);
+); 
 
 export default router;
