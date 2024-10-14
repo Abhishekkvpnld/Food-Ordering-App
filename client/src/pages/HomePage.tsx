@@ -1,8 +1,18 @@
 import Footer from "@/components/Footer";
 import HomeImg from "@/components/HomeImg";
-import { BsSearch } from "react-icons/bs";
+import SearchBar, { SearchForm } from "@/components/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+
+  const navigate = useNavigate();
+
+const handleSearchSubmit = async(searchFormValue:SearchForm)=>{
+navigate({
+  pathname:`/search/${searchFormValue.searchQuery}`
+})
+}
+
   return (
     <div className="flex items-center justify-center flex-col gap-10  bg-slate-100">
       <HomeImg />
@@ -12,16 +22,7 @@ const HomePage = () => {
           Fast & Fresh Delivery
         </h1>
         <p className="text-md">Deliciousness at Your Doorstep!</p>
-        <div className="w-[100%] rounded-3xl flex items-center justify-start px-4  gap-5 bg-slate-200">
-          <BsSearch className="hover:scale-110 hover:text-blue-700 hover:font-semibold" />
-          <input
-            placeholder="search items here..."
-            type="text"
-            name="search"
-            id="search"
-            className="w-full h-10 bg-slate-200"
-          />
-        </div>
+        <SearchBar placeHolder="Search by city or town..." onSubmit={handleSearchSubmit} />
       </div>
 
       <div className="grid md:grid-cols-2 gap-5 px-1 mb-14">
