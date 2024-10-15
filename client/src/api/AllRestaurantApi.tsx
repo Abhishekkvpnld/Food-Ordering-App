@@ -12,7 +12,7 @@ export const useSearchRestaurant = (city: string) => {
 
     if (res?.data?.error) throw new Error("Failed to get restaurant...❌");
 
-    return res?.data;
+    return res?.data?.data;
   }; 
 
   const { data: results, isLoading } = useQuery(

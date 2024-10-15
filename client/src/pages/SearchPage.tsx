@@ -7,11 +7,12 @@ const SearchPage = () => {
   const { city } = useParams();
   const { results, isLoading } = useSearchRestaurant(city);
 
+
   if (isLoading) {
     <span>Loading...</span>;
   }
 
-  if (!results?.data || !city) {
+  if (!results?.restaurants || !city) {
     return <span>No results found...</span>;
   }
 
@@ -20,7 +21,7 @@ const SearchPage = () => {
       <div id="cuisines-list">add cuisines</div>
       <div id="main-content" className="flex flex-col gap-4">
         <SearchResults city={city} total={results?.pagination?.total} />
-        {results.data.map((restaurant, index) => (
+        {results?.restaurants.map((restaurant, index) => (
           <SearchResultsCard restaurant={restaurant} key={index} />
         ))}
       </div>
