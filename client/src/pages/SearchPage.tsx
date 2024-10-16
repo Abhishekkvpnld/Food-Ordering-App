@@ -1,5 +1,6 @@
 import { useSearchRestaurant } from "@/api/AllRestaurantApi";
-import PaginationSection from "@/components/Pagination";
+import CuisinesFilter from "@/components/CuisinesFilter";
+import PaginationSection from "@/components/PaginationSection";
 import SearchBar, { SearchForm } from "@/components/SearchBar";
 import SearchResults from "@/components/SearchResults";
 import SearchResultsCard from "@/components/SearchResultsCard";
@@ -9,16 +10,28 @@ import { useParams } from "react-router-dom";
 export type SearchState = {
   searchQuery: string;
   page: number;
+  selectedCuisines:string[]
 };
 
 const SearchPage = () => {
   const [searchState, setSearchState] = useState<SearchState>({
     page: 1,
     searchQuery: "",
+    selectedCuisines:[]
   });
 
   const { city } = useParams();
   const { results, isLoading } = useSearchRestaurant(city, searchState);
+
+const setSelectedCuisines = (selectedCuisines:string[])=>{
+setSearchState((prev)=>(
+  {
+    ...prev,
+    selectedCuisines,
+    page:1
+  }
+))
+}
 
   const handleSetPage = (page: number) => {
     setSearchState((prev) => ({
@@ -53,7 +66,9 @@ const SearchPage = () => {
 
   return (
     <div className="grid w-[100vw] px-16 grid-cols-1 gap-4 lg:grid-cols-[250px_1fr]">
-      <div id="cuisines-list">add cuisines</div>
+      <div id="cuisines-list">
+        <CuisinesFilter selectedCuisines={searchState.selectedCuisines} onChange={setSelectedCuisines}/>
+      </div>
       <div id="main-content" className="flex flex-col gap-4">
         <SearchBar
           placeHolder="Search by Cuisines or Restaurant name..."

@@ -5,12 +5,17 @@ import { useQuery } from "react-query";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useSearchRestaurant = (city: string | undefined, searchState: SearchState) => {
+export const useSearchRestaurant = (
+  city: string | undefined,
+  searchState: SearchState
+) => {
   const searchRestaurantRequest =
     async (): Promise<RestaurantSearchResponse> => {
       const params = new URLSearchParams();
+
       params.set("searchQuery", searchState.searchQuery);
-      params.set("page",searchState.page.toString())
+      params.set("page", searchState.page.toString());
+      params.set("selectedCuisines", searchState.selectedCuisines.join(","));
 
       const res = await axios.get(
         `${API_BASE_URL}/api/allRestaurant/search/${city}?${params.toString()}`
@@ -22,7 +27,7 @@ export const useSearchRestaurant = (city: string | undefined, searchState: Searc
     };
 
   const { data: results, isLoading } = useQuery(
-    ["searchRestaurants",searchState],
+    ["searchRestaurants", searchState],
     searchRestaurantRequest,
     { enabled: !!city }
   );
