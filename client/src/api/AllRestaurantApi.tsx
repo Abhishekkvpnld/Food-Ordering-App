@@ -5,11 +5,12 @@ import { useQuery } from "react-query";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useSearchRestaurant = (city: string, searchState: SearchState) => {
+export const useSearchRestaurant = (city: string | undefined, searchState: SearchState) => {
   const searchRestaurantRequest =
     async (): Promise<RestaurantSearchResponse> => {
       const params = new URLSearchParams();
       params.set("searchQuery", searchState.searchQuery);
+      params.set("page",searchState.page.toString())
 
       const res = await axios.get(
         `${API_BASE_URL}/api/allRestaurant/search/${city}?${params.toString()}`

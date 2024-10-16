@@ -44,6 +44,7 @@ export const searchRestaurant = async (req: Request, res: Response) => {
 
     const total = await Restaurant.countDocuments(query);
 
+
     res.status(201).json({
       success: true,
       error: false,
