@@ -1,22 +1,27 @@
+import { SearchState } from "@/pages/SearchPage";
 import { RestaurantSearchResponse } from "@/types";
 import axios from "axios";
 import { useQuery } from "react-query";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useSearchRestaurant = (city: string) => {
-  const searchRestaurantRequest = async ():Promise<RestaurantSearchResponse> => {
-    const res = await axios.get(
-      `${API_BASE_URL}/api/allRestaurant/search/${city}`
-    );
+export const useSearchRestaurant = (city: string, searchState: SearchState) => {
+  const searchRestaurantRequest =
+    async (): Promise<RestaurantSearchResponse> => {
+      const params = new URLSearchParams();
+      params.set("searchQuery", searchState.searchQuery);
 
-    if (res?.data?.error) throw new Error("Failed to get restaurant...❌");
+      const res = await axios.get(
+        `${API_BASE_URL}/api/allRestaurant/search/${city}?${params.toString()}`
+      );
 
-    return res?.data?.data;
-  }; 
+      if (res?.data?.error) throw new Error("Failed to get restaurant...❌");
+
+      return res?.data?.data;
+    };
 
   const { data: results, isLoading } = useQuery(
-    ["searchRestaurants"],
+    ["searchRestaurants",searchState],
     searchRestaurantRequest,
     { enabled: !!city }
   );
