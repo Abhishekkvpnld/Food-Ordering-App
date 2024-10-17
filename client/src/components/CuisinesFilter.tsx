@@ -1,6 +1,7 @@
 import { cuisinesList } from "@/config/restaurant-options";
-import { Check } from "lucide-react";
+import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { ChangeEvent } from "react";
+import { Button } from "./ui/button";
 
 type Props = {
   onChange: (cuisines: string[]) => void;
@@ -25,48 +26,69 @@ const CuisinesFilter = ({
       ? [...selectedCuisines, clickedCuisine]
       : selectedCuisines.filter((cuisine) => cuisine !== clickedCuisine);
 
-      onChange(newCheckedCuisinesArray);
+    onChange(newCheckedCuisinesArray);
   };
 
   return (
     <>
       <div className="flex items-center justify-between mt-3 pr-5 px-2">
         <h5 className="font-semibold mb-2 text-md">Filter By Cuisines</h5>
-        <p
+        <div
           onClick={handleCuisinesReset}
           className="text-sm font-semibold mb-2 underline cursor-pointer text-blue-700 "
         >
           Reset Filter
-        </p>
+        </div>
       </div>
 
-      <div className="flex flex-col mt-2">
-        {cuisinesList.map((cuisine, index) => {
-          const isSelected = selectedCuisines.includes(cuisine);
-          return (
-            <div className="flex" key={index}>
-              <input
-                type="checkbox"
-                id={`cuisine_${cuisine}`}
-                className="hidden"
-                value={cuisine}
-                checked={isSelected}
-                onChange={handleCuisinesReset}
-              />
-              <label
-                htmlFor={`cuisine_${cuisine}`}
-                className={`flex items-center flex-1 py-1 px-2 cursor-pointer text-sm rounded-full font-semibold ${
-                  isSelected
-                    ? "border border-green-600"
-                    : "border border-slate-400"
-                }`}
-              >
-                {isSelected && <Check size={20} strokeWidth={3} />}
-                {cuisine}
-              </label>
-            </div>
-          );
-        })}
+      <div className="flex flex-col gap-1 mt-3">
+        {cuisinesList
+          .slice(0, isExpanded ? cuisinesList.length : 8)
+          .map((cuisine, index) => {
+            const isSelected = selectedCuisines.includes(cuisine);
+
+            return (
+              <div className="flex" key={index}>
+                <input
+                  type="checkbox"
+                  id={`cuisine_${cuisine}`}
+                  className="hidden"
+                  value={cuisine}
+                  checked={isSelected}
+                  onChange={handleCusinesChange}
+                />
+                <label
+                  htmlFor={`cuisine_${cuisine}`}
+                  className={`flex items-center justify-between flex-1 py-3 px-14 cursor-pointer text-sm rounded-2xl font-semibold ${
+                    isSelected
+                      ? "border border-green-600"
+                      : "border border-slate-400"
+                  }`}
+                >
+                  {isSelected && (
+                    <Check size={20} strokeWidth={3} color="green" />
+                  )}
+                  {cuisine}
+                </label>
+              </div>
+            );
+          })}
+
+        <Button
+          className="flex-1 mt-4"
+          variant={"link"}
+          onClick={onExpandedClick}
+        >
+          {!isExpanded ? (
+            <span className="flex gap-2 text-purple-800 flex-row items-center">
+              View More <ChevronDown />
+            </span>
+          ) : (
+            <span className="flex text-purple-800 flex-row items-center gap-2">
+              View Less <ChevronUp />
+            </span>
+          )}
+        </Button>
       </div>
     </>
   );
