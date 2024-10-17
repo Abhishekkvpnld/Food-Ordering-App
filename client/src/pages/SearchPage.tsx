@@ -31,7 +31,7 @@ const SearchPage = () => {
   const setSortOption = (sortOption: string) => {
     setSearchState((prev) => ({
       ...prev,
-      sortOption,
+      sortOptions: sortOption,
       page: 1,
     }));
   };

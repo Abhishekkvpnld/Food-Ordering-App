@@ -10,7 +10,7 @@ export const searchRestaurant = async (req: Request, res: Response) => {
     const sortOption = (req.query.sortOption as string) || "lastUpdated";
     const page = parseInt(req.query.page as string) || 1;
 
-    let query: any = {};
+    let query: any = {}; 
 
     query["city"] = new RegExp(city, "i");
     const checkCity = await Restaurant.countDocuments(query);
