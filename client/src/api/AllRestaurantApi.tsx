@@ -1,5 +1,5 @@
 import { SearchState } from "@/pages/SearchPage";
-import { RestaurantSearchResponse } from "@/types";
+import { Restaurant, RestaurantSearchResponse } from "@/types";
 import axios from "axios";
 import { useQuery } from "react-query";
 
@@ -16,7 +16,7 @@ export const useSearchRestaurant = (
       params.set("searchQuery", searchState.searchQuery);
       params.set("page", searchState.page.toString());
       params.set("selectedCuisines", searchState.selectedCuisines.join(","));
-      params.set("sortOption",searchState.sortOptions.toString())
+      params.set("sortOption", searchState.sortOptions.toString());
 
       const res = await axios.get(
         `${API_BASE_URL}/api/allRestaurant/search/${city}?${params.toString()}`
@@ -34,4 +34,17 @@ export const useSearchRestaurant = (
   );
 
   return { results, isLoading };
+};
+
+export const useGetRestaurant = (restaurantId?: string) => {
+  const getRestaurantRequest = async (): Promise<Restaurant> => {
+    const response = await axios.get(
+      `${API_BASE_URL}/allRestaurant/getRestaurant/${restaurantId}`
+    );
+
+    if (response?.data?.success)
+      throw new Error("Failed to get restaurant...❌");
+
+    return response?.data?.data;
+  };
 };

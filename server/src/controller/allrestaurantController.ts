@@ -10,7 +10,7 @@ export const searchRestaurant = async (req: Request, res: Response) => {
     const sortOption = (req.query.sortOption as string) || "lastUpdated";
     const page = parseInt(req.query.page as string) || 1;
 
-    let query: any = {}; 
+    let query: any = {};
 
     query["city"] = new RegExp(city, "i");
     const checkCity = await Restaurant.countDocuments(query);
@@ -44,7 +44,6 @@ export const searchRestaurant = async (req: Request, res: Response) => {
 
     const total = await Restaurant.countDocuments(query);
 
-
     res.status(201).json({
       success: true,
       error: false,
@@ -52,7 +51,7 @@ export const searchRestaurant = async (req: Request, res: Response) => {
       data: {
         restaurants,
         pagination: {
-          total:total,
+          total: total,
           page,
           pages: Math.ceil(total / pageSize),
         },
@@ -71,6 +70,28 @@ export const searchRestaurant = async (req: Request, res: Response) => {
           pages: 1,
         },
       },
+    });
+  }
+};
+
+export const getRestaurant = async (req: Request, res: Response) => {
+  try {
+    const restaurantId = req.params.restaurantId;
+
+    const checkRestaurant = await Restaurant.findById(restaurantId);
+    if (!checkRestaurant) throw new Error("Restaurant not Available...❌");
+
+    res.status(200).json({
+      success: true,
+      error: false,
+      data: checkRestaurant,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: true,
+      success: false,
+      message: (error as Error).message,
     });
   }
 };
