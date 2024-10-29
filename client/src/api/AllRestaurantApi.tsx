@@ -37,14 +37,26 @@ export const useSearchRestaurant = (
 };
 
 export const useGetRestaurant = (restaurantId?: string) => {
-  const getRestaurantRequest = async (): Promise<Restaurant> => {
+  const getRestaurantByIdRequest = async (): Promise<Restaurant> => {
     const response = await axios.get(
-      `${API_BASE_URL}/allRestaurant/getRestaurant/${restaurantId}`
+      `${API_BASE_URL}/api/allRestaurant/getRestaurant/${restaurantId}`
     );
-
-    if (response?.data?.success)
-      throw new Error("Failed to get restaurant...❌");
 
     return response?.data?.data;
   };
+
+  const {
+    data: restaurant,
+    isError,
+    isLoading,
+  } = useQuery("fetchRestaurant", getRestaurantByIdRequest, {
+    enabled: !!restaurantId,
+  });
+
+  console.log(restaurant)
+  if (isError) {
+    throw new Error("Something went wrong...❌");
+  }
+
+  return { restaurant, isLoading };
 };
