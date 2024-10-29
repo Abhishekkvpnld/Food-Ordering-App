@@ -10,7 +10,7 @@ const MenuItem = ({ restaurant }: Props) => {
     <div className="mt-2">
       <span className="text-xl font-bold">Menu</span>
       {restaurant.menuItems.map((item, index) => (
-        <Card key={index} className="cursor-pointer hover:shadow-md mt-4 bg-red-100">
+        <Card key={index} className="cursor-pointer hover:shadow-md mt-4 bg-red-100 hover:border-slate-500">
           <CardHeader>
             <CardTitle className="text-xl text-gray-500">{item.name}</CardTitle>
           </CardHeader>
