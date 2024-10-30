@@ -1,13 +1,22 @@
 import { CartItems } from "@/pages/RestaurantDetailsPage";
 import { Restaurant } from "@/types";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { CartItems as CartItemsType } from "../pages/RestaurantDetailsPage";
+import CheckoutButton from "./CheckoutButton";
 
 type Props = {
   restaurant: Restaurant;
   cartItems: CartItems[];
-  removeFromCart: () => void;
+  removeFromCart: (item: CartItemsType) => void;
 };
 
 const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
@@ -35,7 +44,10 @@ const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
         {cartItems.map((item, index) => (
           <div className="flex justify-between" key={index}>
             <span>
-              <Badge variant={"outline"} className="mr-1">
+              <Badge
+                variant={"outline"}
+                className="mr-3 bg-blue-800 text-white"
+              >
                 {item.quantity}
               </Badge>
               {item.name}
@@ -43,6 +55,12 @@ const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
 
             <span className="flex items-center gap-1">
               &#8377; {(item.price * item.quantity).toFixed(2)}
+              <MdOutlineDeleteOutline
+                size={25}
+                color="red"
+                className="hover:scale-125 transition-all cursor-pointer"
+                onClick={() => removeFromCart(item)}
+              />
             </span>
           </div>
         ))}
@@ -54,6 +72,11 @@ const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
           <span>&#8377; {restaurant.deliveryPrice}.00</span>
         </div>
       </CardContent>
+      <Separator className="text-black h-0.5" />
+
+      <CardFooter className="mt-2 flex items-center justify-center ">
+        <CheckoutButton/>
+      </CardFooter>
     </Card>
   );
 };

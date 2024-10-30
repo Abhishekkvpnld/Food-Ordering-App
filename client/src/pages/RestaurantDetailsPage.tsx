@@ -18,7 +18,11 @@ const RestaurantDetailsPage = () => {
   const { restaurantId } = useParams();
   const { restaurant, isLoading } = useGetRestaurant(restaurantId);
 
-  const [CartItems, setCartItems] = useState<CartItems[]>([]);
+  const [CartItems, setCartItems] = useState<CartItems[]>(() => {
+    const storedCartItems = sessionStorage.getItem(`CartItems-${restaurantId}`);
+
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  });
 
   const addToCart = (menuItem: MenuItemType) => {
     setCartItems((prev) => {
@@ -43,6 +47,12 @@ const RestaurantDetailsPage = () => {
           },
         ];
       }
+
+      sessionStorage.setItem(
+        `CartItems-${restaurantId}`,
+        JSON.stringify(updatedItems)
+      );
+
       return updatedItems;
     });
   };
@@ -50,6 +60,12 @@ const RestaurantDetailsPage = () => {
   const removeFromCart = (cartItem: CartItems) => {
     setCartItems((prev) => {
       const updateRemoveCart = prev.filter((item) => item._id !== cartItem._id);
+
+      sessionStorage.setItem(
+        `CartItems-${restaurantId}`,
+        JSON.stringify(updateRemoveCart)
+      );
+
       return updateRemoveCart;
     });
   };
@@ -77,7 +93,11 @@ const RestaurantDetailsPage = () => {
         </div>
 
         <div>
-          <OrderCart restaurant={restaurant} cartItems={CartItems} removeFromCart={removeFromCart}/>
+          <OrderCart
+            restaurant={restaurant}
+            cartItems={CartItems}
+            removeFromCart={removeFromCart}
+          />
         </div>
       </div>
     </div>
