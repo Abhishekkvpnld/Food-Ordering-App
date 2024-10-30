@@ -12,6 +12,7 @@ import { Separator } from "./ui/separator";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { CartItems as CartItemsType } from "../pages/RestaurantDetailsPage";
 import CheckoutButton from "./CheckoutButton";
+import { UserFormData } from "@/form/user-profile-form/UserProfileForm";
 
 type Props = {
   restaurant: Restaurant;
@@ -29,6 +30,10 @@ const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
     const totalWithDeliveryPrice = totalPrice + restaurant.deliveryPrice;
 
     return totalWithDeliveryPrice;
+  };
+
+  const onCheckout = (userFormData: UserFormData) => {
+    console.log(userFormData);
   };
 
   return (
@@ -75,7 +80,10 @@ const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
       <Separator className="text-black h-0.5" />
 
       <CardFooter className="mt-2 flex items-center justify-center ">
-        <CheckoutButton/>
+        <CheckoutButton
+          disabled={cartItems.length === 0}
+          onCheckout={onCheckout}
+        />
       </CardFooter>
     </Card>
   );

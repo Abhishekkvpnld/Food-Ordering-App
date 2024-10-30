@@ -15,6 +15,7 @@ import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import { User } from "@/types";
 import { useEffect } from "react";
+import { title } from "process";
 
 const formSchema = z.object({
   email: z.string().optional(),
@@ -24,15 +25,17 @@ const formSchema = z.object({
   country: z.string().min(1, "Country is required"),
 });
 
-type UserFormData = z.infer<typeof formSchema>;
+export type UserFormData = z.infer<typeof formSchema>;
 
 type Props = {
   onSave: (UserProfileData: UserFormData) => void;
   isLoading: boolean;
   currentUser: User;
+  title?:string;
+  buttonText?:string
 };
 
-const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
+const UserProfileForm = ({ onSave, isLoading, currentUser,buttonText="Submit", title="User Profile"  }: Props) => {
   const form = useForm<UserFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: currentUser,
@@ -49,7 +52,7 @@ const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
         className="space-y-4 bg-gray-100 rounded-lg px-5 py-3 md:p-10"
       >
         <div>
-          <h1 className="font-bold text-2xl">User Profile</h1>
+          <h1 className="font-bold text-2xl">{title}</h1>
           <FormDescription>
             You Can Change Your Profile Information Here
           </FormDescription>
@@ -145,7 +148,7 @@ const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
           <LoadingButton />
         ) : (
           <Button type="submit" className="bg-green-600">
-            submit
+            {buttonText}
           </Button>
         )}
       </form>
