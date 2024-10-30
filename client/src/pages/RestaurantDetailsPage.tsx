@@ -5,6 +5,7 @@ import RestaurantInfo from "@/components/RestaurantInfo";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { MenuItem as MenuItemType } from "../types";
 
 export type CartItems = {
   _id: string;
@@ -19,12 +20,46 @@ const RestaurantDetailsPage = () => {
 
   const [CartItems, setCartItems] = useState<CartItems[]>([]);
 
+  const addToCart = (menuItem: MenuItemType) => {
+    setCartItems((prev) => {
+      const existingCartItem = prev.find((item) => item._id === menuItem._id);
+
+      let updatedItems;
+
+      if (existingCartItem) {
+        updatedItems = prev.map((item) =>
+          item._id === menuItem._id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        updatedItems = [
+          ...prev,
+          {
+            _id: menuItem._id,
+            name: menuItem.name,
+            price: menuItem.price,
+            quantity: 1,
+          },
+        ];
+      }
+      return updatedItems;
+    });
+  };
+
+  const removeFromCart = (cartItem: CartItems) => {
+    setCartItems((prev) => {
+      const updateRemoveCart = prev.filter((item) => item._id !== cartItem._id);
+      return updateRemoveCart;
+    });
+  };
+
   if (isLoading || !restaurant) {
     return <p>Loading...</p>;
   }
 
   return (
-    <div className="flex flex-col gap-8 w-[100vw] mt-2 px-5 ">
+    <div className="flex flex-col gap-8 w-[100vw] mt-2 pl-5 pr-8 ">
       <AspectRatio ratio={16 / 5}>
         <img
           src={restaurant?.imageUrl}
@@ -38,11 +73,11 @@ const RestaurantDetailsPage = () => {
       <div className="grid md:grid-cols-[4fr_2fr] gap-5 md:px-10">
         <div className="flex flex-col gap-3">
           <RestaurantInfo restaurant={restaurant} />
-          <MenuItem restaurant={restaurant} />
+          <MenuItem restaurant={restaurant} addToCart={addToCart} />
         </div>
 
         <div>
-            <OrderCart restaurant={restaurant} cartItems={CartItems}/>
+          <OrderCart restaurant={restaurant} cartItems={CartItems} removeFromCart={removeFromCart}/>
         </div>
       </div>
     </div>

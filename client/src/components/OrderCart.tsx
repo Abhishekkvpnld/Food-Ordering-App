@@ -4,13 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
 
-
 type Props = {
   restaurant: Restaurant;
   cartItems: CartItems[];
+  removeFromCart: () => void;
 };
 
-const OrderCart = ({ restaurant, cartItems }: Props) => {
+const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
   const getTotalPrice = () => {
     const totalPrice = cartItems.reduce(
       (total, cartItem) => total + cartItem.price * cartItem.quantity,
@@ -47,10 +47,10 @@ const OrderCart = ({ restaurant, cartItems }: Props) => {
           </div>
         ))}
 
-        <Separator className="text-black h-0.5"/>
+        <Separator className="text-black h-0.5" />
 
         <div className="flex justify-between">
-          <span>Delivery</span>
+          <span>Delivery Charge </span>
           <span>&#8377; {restaurant.deliveryPrice}.00</span>
         </div>
       </CardContent>
