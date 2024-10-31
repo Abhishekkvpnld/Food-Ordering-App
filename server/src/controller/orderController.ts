@@ -2,6 +2,7 @@ import { MenuItemType } from "./../models/restaurant";
 import Restaurant from "../models/restaurant";
 import { Request, Response } from "express";
 import Stripe from "stripe";
+import { url } from "inspector";
 
 const STRIPE = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const FRONTEND_URL = process.env.FRONTEND_URL;
@@ -34,6 +35,21 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       checkoutSessionRequest,
       restaurant.menuItems
     );
+
+    const session = await createSession(
+      lineItems,
+      "TEST_ORDER_ID",
+      restaurant.deliveryPrice,
+      restaurant._id.toString()
+    );
+
+    if (!session.url) throw new Error("Error creating stripe session...✅");
+
+    res.status(200).json({
+      success: true,
+      error: false,
+      url: session.url,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -57,7 +73,7 @@ const createLineItems = (
 
     const line_item: Stripe.Checkout.SessionCreateParams.LineItem = {
       price_data: {
-        currency: "Rs",
+        currency: "INR",
         unit_amount: menuItem.price,
         product_data: {
           name: menuItem.name,
@@ -70,4 +86,36 @@ const createLineItems = (
   });
 
   return lineItem;
+};
+
+const createSession = async (
+  lineItems: Stripe.Checkout.SessionCreateParams.LineItem[],
+  restaurantId: string,
+  deliveryPrice: number,
+  orderId: string
+) => {
+  const sessionData = await STRIPE.checkout.sessions.create({
+    line_items: lineItems,
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          display_name: "Delivery",
+          type: "fixed_amount",
+          fixed_amount: {
+            amount: deliveryPrice,
+            currency: "INR",
+          },
+        },
+      },
+    ],
+    mode: "payment",
+    metadata: {
+      orderId,
+      restaurantId,
+    },
+    success_url: `${FRONTEND_URL}/order-status?success=true`,
+    cancel_url: `${FRONTEND_URL}/restaurantDetails/:${restaurantId}?canceled=true`,
+  });
+
+  return sessionData;
 };
