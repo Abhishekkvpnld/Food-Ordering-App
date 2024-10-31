@@ -6,6 +6,7 @@ import dbConnection from "./config/database";
 import userRoute from "./routes/userRoute";
 import restaurantRoute from "./routes/restaurantRoute";
 import allRestaurantRoute from "./routes/allRestaurantRoute";
+import orderRoute from "./routes/orderRoute";
 import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
@@ -26,8 +27,9 @@ app.use(morgan("dev"));
 
 // Routes
 app.use("/api/user", userRoute);
-app.use("/api/restaurant",restaurantRoute);
-app.use("/api/allRestaurant",allRestaurantRoute);
+app.use("/api/restaurant", restaurantRoute);
+app.use("/api/allRestaurant", allRestaurantRoute);
+app.use("/api/order", orderRoute);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Server running...🚀🚀");

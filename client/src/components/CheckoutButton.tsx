@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { useLocation } from "react-router-dom";
 import LoadingButton from "./LoadingButton";
 import { Dialog } from "./ui/dialog";
-import { DialogContent, DialogTrigger } from "@radix-ui/react-dialog";
+import { DialogContent, DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
 import UserProfileForm, { UserFormData } from "@/form/user-profile-form/UserProfileForm";
 import { useGetCurrentUser } from "@/api/UserApi";
 
@@ -55,8 +55,10 @@ const CheckoutButton = ({ disabled, onCheckout }: Props) => {
     </DialogTrigger>
   
     <DialogContent
-      className="bg-slate-100 max-w-[90vw] md:max-w-[400px] md:min-w-[650px] rounded-lg absolute"
+      className="max-w-[100vw] md:max-w-[100vw] md:min-w-[100vw]
+                 fixed inset-0 flex items-center justify-center bg-slate-800 bg-opacity-80"
     >
+      <DialogTitle></DialogTitle>
       <UserProfileForm
         currentUser={CurrentUser}
         onSave={onCheckout}
@@ -66,6 +68,7 @@ const CheckoutButton = ({ disabled, onCheckout }: Props) => {
       />
     </DialogContent>
   </Dialog>
+  
   
   );
 };
