@@ -2,7 +2,7 @@ import { MenuItemType } from "./../models/restaurant";
 import Restaurant from "../models/restaurant";
 import { Request, Response } from "express";
 import Stripe from "stripe";
-import { url } from "inspector";
+import Order from "../models/order";
 
 const STRIPE = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const FRONTEND_URL = process.env.FRONTEND_URL;
@@ -29,7 +29,17 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
     const restaurant = await Restaurant.findById(
       checkoutSessionRequest.restaurantId
     );
+
     if (!restaurant) throw new Error("Restaurant not available...❌");
+
+    const newOrder = new Order({
+      restaurant: restaurant,
+      user: req.userId,
+      status: "Placed",
+      deliveryDetails: checkoutSessionRequest.deliveryDetails,
+      cartItems: checkoutSessionRequest.cartItems,
+      createdAt: new Date(),
+    });
 
     const lineItems = createLineItems(
       checkoutSessionRequest,
@@ -38,12 +48,14 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
 
     const session = await createSession(
       lineItems,
-      "TEST_ORDER_ID",
+      newOrder._id.toString(),
       restaurant.deliveryPrice,
       restaurant._id.toString()
     );
 
-    if (!session.url) throw new Error("Error creating stripe session...✅");
+    if (!session.url) throw new Error("Error creating stripe session...❌");
+
+    await newOrder.save();
 
     res.status(200).json({
       success: true,
@@ -74,7 +86,7 @@ const createLineItems = (
     const line_item: Stripe.Checkout.SessionCreateParams.LineItem = {
       price_data: {
         currency: "INR",
-        unit_amount: menuItem.price,
+        unit_amount: menuItem.price * 100,
         product_data: {
           name: menuItem.name,
         },
@@ -102,7 +114,7 @@ const createSession = async (
           display_name: "Delivery",
           type: "fixed_amount",
           fixed_amount: {
-            amount: deliveryPrice,
+            amount: deliveryPrice * 100,
             currency: "INR",
           },
         },
@@ -114,7 +126,7 @@ const createSession = async (
       restaurantId,
     },
     success_url: `${FRONTEND_URL}/order-status?success=true`,
-    cancel_url: `${FRONTEND_URL}/restaurantDetails/:${restaurantId}?canceled=true`,
+    cancel_url: `${FRONTEND_URL}/restaurantDetails/${restaurantId}?canceled=true`,
   });
 
   return sessionData;
