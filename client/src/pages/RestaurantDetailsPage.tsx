@@ -18,6 +18,7 @@ const RestaurantDetailsPage = () => {
   const { restaurantId } = useParams();
   const { restaurant, isLoading } = useGetRestaurant(restaurantId);
 
+
   const [CartItems, setCartItems] = useState<CartItems[]>(() => {
     const storedCartItems = sessionStorage.getItem(`CartItems-${restaurantId}`);
 
