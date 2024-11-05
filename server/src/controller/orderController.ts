@@ -55,7 +55,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
 
     if (!session.url) throw new Error("Error creating stripe session...❌");
 
-    await newOrder.save();
+    await newOrder.save();  
 
     res.status(200).json({
       success: true,
@@ -131,3 +131,11 @@ const createSession = async (
 
   return sessionData;
 };
+
+
+export const stripeWebhookHandler = async(req:Request,res:Response)=>{
+  console.log("Recieved events");
+  console.log("====");
+  console.log("event :",req.body);
+  res.send();
+}
