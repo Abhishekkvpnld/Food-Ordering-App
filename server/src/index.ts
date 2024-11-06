@@ -21,9 +21,10 @@ cloudinary.config({
 });
 
 // Middleware
-app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use("/api/order/checkout/webhook", express.raw({ type: "*/*" }));
+app.use(express.json());
 
 // Routes
 app.use("/api/user", userRoute);
