@@ -3,6 +3,7 @@ import multer from "multer";
 import {
   createRestaurant,
   getRestaurant,
+  getRestaurantOrders,
   updateRestaurant,
 } from "../controller/restaurantController";
 import { jwtCheck, jwtParse } from "../middlewares/Auth";
@@ -20,6 +21,8 @@ const upload = multer({
 
 // api/restaurant/
 router.get("/get-restaurant", jwtCheck, jwtParse, getRestaurant);
+
+router.get("/order",jwtCheck,jwtParse,getRestaurantOrders)
 
 router.post(
   "/create-restaurant",
