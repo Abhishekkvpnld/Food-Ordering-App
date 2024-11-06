@@ -164,3 +164,26 @@ export const stripeWebhookHandler = async (req: Request, res: Response) => {
 
   res.status(200).send();
 };
+
+export const getOrderDetails = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+
+    const allOrders = await Order.find({ user: userId })
+      .populate("restaurant")
+      .populate("user");
+
+    res.status(200).json({
+      success: true,
+      error: false,
+      data: allOrders,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: true,
+      message: "Something went wrong...❌",
+    });
+  }
+};
