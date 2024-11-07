@@ -1,4 +1,4 @@
-import { Restaurant } from "@/types";
+import { Orders, Restaurant } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useMutation, useQuery } from "react-query";
@@ -115,4 +115,30 @@ export const useUpdateRestaurant = () => {
     isLoading,
     updateRestaurant,
   };
+};
+
+export const useGetMyRestaurantOrders = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const getRestuarantOrdersRequest = async (): Promise<Orders[]> => {
+    const accessToken = await getAccessTokenSilently();
+
+    const res = await axios.get(`${API_BASE_URL}/api/restaurant/order`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.data.success) throw new Error("Failed to fetch orders...❌");
+
+    return res?.data?.data
+  };
+
+  const { data: orders, isLoading } = useQuery(
+    "fetchRestaurantOrders",
+    getRestuarantOrdersRequest
+  );
+
+  return {orders, isLoading};
 };
