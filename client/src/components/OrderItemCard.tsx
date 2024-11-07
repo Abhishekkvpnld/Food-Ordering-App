@@ -1,6 +1,10 @@
 import { Orders } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Separator } from "./ui/separator";
+import { Badge } from "./ui/badge";
+import { Label } from "./ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { ORDER_STATUS } from "@/config/order-status";
 
 type Props = {
   order: Orders;
@@ -19,7 +23,7 @@ const OrderItemCard = ({ order }: Props) => {
   };
 
   return (
-    <Card className="border border-gray-500">
+    <Card className="border border-gray-500 h-[100%]">
       <CardHeader>
         <CardTitle className="grid md:grid-cols-4 gap-3 justify-between mb-2">
           <div className="ml-2">
@@ -45,10 +49,45 @@ const OrderItemCard = ({ order }: Props) => {
         </CardTitle>
       </CardHeader>
 
-      <Separator />
+      <Separator className="w-[100%] mb-3" />
 
       <CardContent className="flex flex-col">
-        
+        <div className="flex flex-col gap-4">
+          {order?.cartItems?.map((item, index) => (
+            <span key={index}>
+              <Badge variant={"outline"} className="mr-3">
+                {item.quantity}
+              </Badge>
+              {item.name}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-2 mt-4 font-normal">
+          <Label htmlFor="status" className="font-normal">
+            Change status of this order...
+          </Label>
+          <Select>
+            <SelectTrigger
+              id="status"
+              className="border border-red-500 rounded-md p-1 max-w-[50%] cursor-pointer hover:animate-pulse hover:bg-green-100 hover:border-green-800 hover:font-semibold hover:text-green-700"
+            >
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+
+            <SelectContent className="text-left font-normal text-sm space-y-1 border rounded-md bg-slate-50 px-4 py-2 mt-14">
+              {ORDER_STATUS.map((order, index) => (
+                <SelectItem
+                  key={index}
+                  value={order.value}
+                  className="hover:underline hover:scale-105 transition-all cursor-pointer"
+                >
+                  {order.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </CardContent>
     </Card>
   );

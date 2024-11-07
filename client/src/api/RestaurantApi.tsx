@@ -132,7 +132,7 @@ export const useGetMyRestaurantOrders = () => {
 
     if (!res.data.success) throw new Error("Failed to fetch orders...❌");
 
-    return res?.data?.data
+    return res?.data?.data;
   };
 
   const { data: orders, isLoading } = useQuery(
@@ -140,5 +140,57 @@ export const useGetMyRestaurantOrders = () => {
     getRestuarantOrdersRequest
   );
 
-  return {orders, isLoading};
+  return { orders, isLoading };
+};
+
+type UpdateOrderStatus = {
+  orderId: string;
+  status: string;
+};
+
+export const useUpdateOrderStatus = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const updateOrderStatusRequest = async (
+    UpdateOrderStatus: UpdateOrderStatus
+  ) => {
+    const accessToken = await getAccessTokenSilently();
+
+    const res = await axios.patch(
+      `${API_BASE_URL}/api/restaurant/order/${UpdateOrderStatus.orderId}/status`,
+      {
+        status: UpdateOrderStatus.status,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    if (!res?.data?.success) {
+      throw new Error("Failed to Update Status...❌");
+    }
+
+    return res?.data?.data;
+  };
+
+  const {
+    mutateAsync: updateOrderStatus,
+    isError,
+    isSuccess,
+    isLoading,
+    reset,
+  } = useMutation(updateOrderStatusRequest);
+
+  if (isSuccess) {
+    toast.success("Order Updated...");
+  }
+
+  if (isError) {
+    toast.error("Unable to Update Order Status...");
+    reset();
+  }
+
+  return { updateOrderStatus, isLoading };
 };

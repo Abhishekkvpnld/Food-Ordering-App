@@ -132,3 +132,36 @@ export const getRestaurantOrders = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const updateOrderStatus = async (req: Request, res: Response) => {
+  try {
+    const orderId = req.params.orderId;
+    const { status } = req.body;
+    const userId = req.userId;
+
+    const order = await Order.findById(orderId);
+    if (!order) throw new Error("Order not found...❌");
+
+    const restaurant = await Restaurant.findById(order.restaurant);
+
+    if (restaurant?.user?._id.toString() !== userId) {
+      throw new Error("You can not access...❌");
+    }
+
+    order.status = status;
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      error: false,
+      data: order,
+    });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: true,
+      message: error.message,
+    });
+  }
+};

@@ -1,9 +1,11 @@
+
 import express from "express";
 import multer from "multer";
 import {
   createRestaurant,
   getRestaurant,
   getRestaurantOrders,
+  updateOrderStatus,
   updateRestaurant,
 } from "../controller/restaurantController";
 import { jwtCheck, jwtParse } from "../middlewares/Auth";
@@ -22,7 +24,9 @@ const upload = multer({
 // api/restaurant/
 router.get("/get-restaurant", jwtCheck, jwtParse, getRestaurant);
 
-router.get("/order",jwtCheck,jwtParse,getRestaurantOrders)
+router.get("/order",jwtCheck,jwtParse,getRestaurantOrders);
+
+router.patch("/order/:orderId/status",jwtCheck,jwtParse,updateOrderStatus);
 
 router.post(
   "/create-restaurant",
