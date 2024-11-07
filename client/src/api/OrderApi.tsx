@@ -64,7 +64,7 @@ export const useCreateCheckoutSession = () => {
 export const useGetAllOrders = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const getAllOrdersRequest = async ():Promise<Orders[]> => {
+  const getAllOrdersRequest = async (): Promise<Orders[]> => {
     const accessToken = await getAccessTokenSilently();
 
     const res = await axios.get(`${API_BASE_URL}/api/order/all-orders`, {
@@ -75,8 +75,8 @@ export const useGetAllOrders = () => {
 
     if (!res.data.success) {
       throw new Error("Failed to get orders...❌");
-    } 
- 
+    }
+
     return res?.data?.data;
   };
 
@@ -84,7 +84,10 @@ export const useGetAllOrders = () => {
     isLoading,
     data: allOrders,
     error,
-  } = useQuery("fetchAll  Orders", getAllOrdersRequest);
+  } = useQuery("fetchAllOrders", getAllOrdersRequest, {
+    refetchInterval: 5000,
+  });
+
   if (error) throw new Error("Something went wrong");
 
   return { isLoading, allOrders };
