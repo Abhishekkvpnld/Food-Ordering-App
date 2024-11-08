@@ -1,0 +1,12 @@
+{
+  "routes": [
+    { "src": "/", "dest": "/" },
+    { "src": "/auth-callback", "dest": "/" },
+    { "src": "/user-profile", "dest": "/" },
+    { "src": "/search/(.*)", "dest": "/" },
+    { "src": "/restaurantDetails/(.*)", "dest": "/" },
+    { "src": "/manage-restaurant", "dest": "/" },
+    { "src": "/orders", "dest": "/" },
+    { "src": ".*", "dest": "/" }
+  ]
+}
