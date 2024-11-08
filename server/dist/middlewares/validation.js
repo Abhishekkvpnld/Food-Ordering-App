@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateUserRequest = void 0;
+exports.validateRestaurantRequest = exports.validateUserRequest = void 0;
 const express_validator_1 = require("express-validator");
 // Middleware to handle validation errors
 const handleValidationErrors = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -36,4 +36,31 @@ exports.validateUserRequest = [
         .withMessage("AddressLine1 must be a string"),
     (0, express_validator_1.body)("country").isString().notEmpty().withMessage("Country must be a string"),
     handleValidationErrors,
+];
+exports.validateRestaurantRequest = [
+    (0, express_validator_1.body)("restaurantName")
+        .notEmpty()
+        .withMessage("Restaurant name is required...❌"),
+    (0, express_validator_1.body)("city").notEmpty().withMessage("City is required...❌"),
+    (0, express_validator_1.body)("country").notEmpty().withMessage("Country is required...❌"),
+    (0, express_validator_1.body)("deliveryPrice")
+        .isFloat({ min: 0 })
+        .withMessage("Delivery price must be a positive number...❌"),
+    (0, express_validator_1.body)("estimatedDeliveryTime")
+        .isInt({ min: 0 })
+        .withMessage("Estimated delivery time must be a positive number...❌"),
+    (0, express_validator_1.body)("cuisines")
+        .isArray()
+        .withMessage("Cuisines must be an array...❌")
+        .not()
+        .isEmpty()
+        .withMessage("Cuisines array can not be empty"),
+    (0, express_validator_1.body)("menuItems")
+        .isArray()
+        .withMessage("Menu items must be an array...❌"),
+    (0, express_validator_1.body)("menuItems.*.name").notEmpty()
+        .withMessage("Menu items name is required...❌"),
+    (0, express_validator_1.body)("menuItems.*.price").isFloat({ min: 0 })
+        .withMessage("Menu items price is required and must be a positive number...❌"),
+    handleValidationErrors
 ];
