@@ -18,11 +18,11 @@ export type SearchForm = z.infer<typeof formSchema>;
 type Props = {
   onSubmit: (formData: SearchForm) => void;
   placeHolder: string;
-  onReset: () => void;
+  onReset?: () => void;
   searchQuery?: string;
 };
 
-const SearchBar = ({ onSubmit, placeHolder, onReset, searchQuery }: Props) => {
+const SearchBar = ({ onSubmit, placeHolder,searchQuery }: Props) => {
   const form = useForm<SearchForm>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,9 +39,6 @@ const SearchBar = ({ onSubmit, placeHolder, onReset, searchQuery }: Props) => {
       searchQuery: "",
     });
 
-    if (onReset) {
-      onReset();
-    }
   };
 
   return (

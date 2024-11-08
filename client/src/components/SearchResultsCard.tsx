@@ -46,7 +46,7 @@ const SearchResultsCard = ({ restaurant }: Props) => {
               <div className="flex items-center gap-1">
                 <Banknote />
                 Delivery from &#8377;{" "}
-                {(restaurant.deliveryPrice / 100).toFixed(2)}
+                {parseInt(restaurant.deliveryPrice).toFixed(2)}
               </div>
             </div>
           </div>

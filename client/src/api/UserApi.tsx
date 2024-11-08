@@ -26,9 +26,7 @@ export const useGetCurrentUser = () => {
   const {
     data: CurrentUser,
     error,
-    isError,
     isLoading,
-    isSuccess,
   } = useQuery("fetchCurrentUser", getCurrentUserRequest);
 
   if (error) {

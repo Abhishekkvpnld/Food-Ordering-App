@@ -1,7 +1,7 @@
 import RestaurantFormSection from "@/form/manage-restaurant-form/RestaurantFormSection";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import { z } from "zod";
 import { Separator } from "@radix-ui/react-separator";
 import CuisinesSection from "./CuisinesSection";
@@ -73,21 +73,26 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
     }
 
     const formatetdeliveryPrice = parseInt(
-      (restaurant.deliveryPrice / 100).toFixed(2)
-    );
+      (restaurant.deliveryPrice)
+    ).toFixed(2);
     const formatedMenuItems = restaurant.menuItems.map((item) => ({
       ...item,
       price: parseInt((item.price / 100).toFixed(2)),
     }));
 
+
     const updatedrestaurantData = {
       ...restaurant,
-      deliveryPrice: formatetdeliveryPrice,
+      deliveryPrice:parseInt( formatetdeliveryPrice),
       menuItems: formatedMenuItems,
+      estimatedDeliveryTime: parseInt(restaurant.estimatedDeliveryTime), 
+      cuisines: restaurant.cuisines.length > 0 ? [restaurant.cuisines[0], ...restaurant.cuisines.slice(1)] : [],
+   
     };
     form.reset(updatedrestaurantData);
   }, [form, restaurant]);
 
+  
   const onSubmit = (formDataJson: RestaurantFormData) => {
     const formData = new FormData();
 

@@ -13,7 +13,7 @@ const OrderDetailsHeader = ({ order }: Props) => {
     const created = new Date(order.createdAt);
 
     created.setMinutes(
-      created.getMinutes() + order.restaurant.estimatedDeliveryTime
+      created.getMinutes() + parseInt(order.restaurant.estimatedDeliveryTime)
     );
 
     const hours = created.getHours();
