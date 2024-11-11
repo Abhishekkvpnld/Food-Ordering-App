@@ -21,7 +21,15 @@ cloudinary.config({
 });
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      process.env.FRONTEND_URL as string,
+      "http://localhost:5173",
+    ],
+    credentials: true,
+  })
+); 
 app.use(morgan("dev"));
 app.use("/api/order/checkout/webhook", express.raw({ type: "*/*" }));
 app.use(express.json());

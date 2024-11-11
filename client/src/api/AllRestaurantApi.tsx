@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useSearchRestaurant = (
+export const useSearchRestaurant = ( 
   city: string | undefined,
   searchState: SearchState
 ) => {
