@@ -20,7 +20,7 @@ router.get(
 
 router.get(
   "/getRestaurant/:restaurantId",
-  param("restaurantId")
+  param("restaurantId") 
     .isString()
     .trim()
     .notEmpty()
