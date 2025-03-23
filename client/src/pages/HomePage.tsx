@@ -41,14 +41,15 @@ const HomePage = () => {
 
 
   <button
-    onClick={handleSearchSubmit}
-    className="mt-4 bg-orange-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-orange-700 transition-all flex items-center gap-2 text-lg font-semibold"
-  >
-    Explore Now
-    <span className="transform transition-transform duration-300 group-hover:translate-x-1">
-      👉
-    </span>
-  </button>
+  onClick={() => handleSearchSubmit({ searchQuery: "Kerala" })}
+  className="mt-4 bg-orange-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-orange-700 transition-all flex items-center gap-2 text-lg font-semibold"
+>
+  Explore Now
+  <span className="transform transition-transform duration-300 group-hover:translate-x-1">
+    👉
+  </span>
+</button>
+
 </div>
 
 
