@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 const HomeImg = () => {
   const navigate = useNavigate();
-
   let place = "Kerala";
+
   const handleFoods = () => {
     navigate(`/search/${place}`);
   };
 
   return (
-    <div className="flex items-start justify-center min-h-[70vh] flex-wrap md:flex-row ">
+    <div className="flex items-start justify-center min-h-[70vh] flex-wrap md:flex-row">
+      {/* Image Section */}
       <div className="flex items-center justify-center flex-1">
         <img
           src="/homeImg.webp"
@@ -18,17 +19,22 @@ const HomeImg = () => {
           alt="img"
         />
       </div>
+
+      {/* Text Section */}
       <div className="mt-4 flex items-start flex-col h-[300px] justify-center flex-1 pr-10">
-        <p className="text-lg text-slate-600 font-semibold animate-bounce">
-          Discover delicious dishes from around the world, delivered to your
-          door.
+        <p className="text-lg text-slate-600 font-semibold animate-bounce text-center md:text-left">
+          <span className="text-orange-500">Discover</span> delicious dishes from
+          around the world, delivered to your{" "}
+          <span className="text-green-500">door.</span>
         </p>
+
+        {/* Explore Button */}
         <button
           onClick={handleFoods}
-          className="border py-2 px-6 rounded-lg hover:bg-green-600 hover:text-white flex items-center justify-between gap-3"
+          className="mt-4 bg-green-600 text-white py-2 px-6 rounded-lg flex items-center gap-3 text-lg font-semibold shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105"
         >
           Explore Food
-          <span className="inline-block transform transition-transform duration-300 ease-in-out hover:translate-x-2">
+          <span className="inline-block transform transition-transform duration-300 ease-in-out group-hover:translate-x-1">
             <FaArrowRightLong />
           </span>
         </button>
