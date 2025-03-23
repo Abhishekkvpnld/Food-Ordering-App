@@ -15,7 +15,7 @@ navigate({
 
   return (
     <div className="flex items-center justify-center flex-col gap-10  bg-slate-100">
-      <HomeImg />
+      <HomeImg  />
 
       <div className="bg-white w-[80%] rounded-lg shadow-md py-3 px-20 leading-none flex flex-col items-center justify-center gap-4 -mt-28">
         <h1 className="text-3xl font-bold text-orange-500 tracking-tight">

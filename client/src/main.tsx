@@ -12,7 +12,7 @@ import { Toaster } from "sonner";
 const quryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: false,  
     },
   },
 });
@@ -20,7 +20,7 @@ const quryClient = new QueryClient({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Router>
-      <QueryClientProvider client={quryClient}>
+      <QueryClientProvider client={quryClient}> 
         <Auth0ProviderWithNavigate>
           <AppRoutes />
           <Toaster position="top-right"  visibleToasts={1} toastOptions={{duration:2000}} richColors/>

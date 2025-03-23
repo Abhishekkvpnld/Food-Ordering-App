@@ -22,7 +22,7 @@ type Props = {
   searchQuery?: string;
 };
 
-const SearchBar = ({ onSubmit, placeHolder,searchQuery }: Props) => {
+const SearchBar = ({ onSubmit, placeHolder, searchQuery }: Props) => {
   const form = useForm<SearchForm>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,21 +38,20 @@ const SearchBar = ({ onSubmit, placeHolder,searchQuery }: Props) => {
     form.reset({
       searchQuery: "",
     });
-
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={`w-[100%] px-1 gap-3 bg-slate-50 flex items-center justify-between flex-row border-2 rounded-full p-1 mt-2 ${
-          form.formState.errors.searchQuery && "border-red-600"
+        className={`w-[100%] px-3 gap-4 bg-white flex items-center justify-between border-2 rounded-full p-2 mt-2 shadow-md transition-all ${
+          form.formState.errors.searchQuery ? "border-red-600" : "border-gray-200"
         }`}
       >
         <Search
           strokeWidth={2.5}
           size={25}
-          className="ml-1 text-blue-600 hidden md:block"
+          className="text-orange-500 hidden md:block"
         />
         <FormField
           control={form.control}
@@ -62,26 +61,30 @@ const SearchBar = ({ onSubmit, placeHolder,searchQuery }: Props) => {
               <FormControl>
                 <Input
                   {...field}
-                  className=" border-none shadow-none text-xl focus-visible:ring-0"
+                  className="border-none shadow-none text-lg focus-visible:ring-0 placeholder-gray-400"
                   placeholder={placeHolder}
                 />
               </FormControl>
             </FormItem>
           )}
         />
+        <div className="flex gap-2">
+          <Button
+            onClick={handleReset}
+            type="button"
+            variant={"outline"}
+            className="rounded-full text-sm h-9 flex items-center justify-center border-orange-500 text-orange-500 hover:bg-orange-100"
+          >
+            Reset
+          </Button>
 
-        <Button
-          onClick={handleReset}
-          type="button"
-          variant={"outline"}
-          className="rounded-full text-sm h-8 flex items-center justify-center"
-        >
-          Reset
-        </Button>
-
-        <Button type="submit" className="rounded-full bg-blue-600 h-9 ">
-          Search
-        </Button>
+          <Button
+            type="submit"
+            className="rounded-full bg-orange-500 h-9 hover:bg-orange-600 text-white px-4"
+          >
+            Search
+          </Button>
+        </div>
       </form>
     </Form>
   );

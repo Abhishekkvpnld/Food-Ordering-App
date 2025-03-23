@@ -1,6 +1,14 @@
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const HomeImg = () => {
+  const navigate = useNavigate();
+
+  let place = "Kerala";
+  const handleFoods = () => {
+    navigate(`/search/${place}`);
+  };
+
   return (
     <div className="flex items-start justify-center min-h-[70vh] flex-wrap md:flex-row ">
       <div className="flex items-center justify-center flex-1">
@@ -15,7 +23,10 @@ const HomeImg = () => {
           Discover delicious dishes from around the world, delivered to your
           door.
         </p>
-        <button className="border py-2 px-6 rounded-lg hover:bg-green-600 hover:text-white flex items-center justify-between gap-3">
+        <button
+          onClick={handleFoods}
+          className="border py-2 px-6 rounded-lg hover:bg-green-600 hover:text-white flex items-center justify-between gap-3"
+        >
           Explore Food
           <span className="inline-block transform transition-transform duration-300 ease-in-out hover:translate-x-2">
             <FaArrowRightLong />
