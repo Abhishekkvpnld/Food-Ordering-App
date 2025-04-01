@@ -7,24 +7,27 @@ const MainNav = () => {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
 
   return (
-    <span>
+    <nav className="flex items-center gap-8 w-full">
       {isAuthenticated ? (
-        <div className="flex font-semibold gap-10 ">
-          <Link className="hover:text-green-700" to={"/orders"}>
-            Orders
+        <div className="flex items-center gap-6 text-lg font-semibold">
+          <Link 
+            to="/orders" 
+            className="text-gray-800 hover:scale-110 hover:text-red-600 transition-all"
+          >
+            📦 Orders
           </Link>
           <UsernameMenu />
         </div>
       ) : (
         <Button
-          variant={"ghost"}
-          className="bg-white border border-green-500 hover:border-green-600 hover:bg-green-600 hover:text-white h-8 font-semibold text-green-500"
+          variant="ghost"
+          className="border border-green-500 text-green-600 hover:bg-green-600 hover:text-white transition-all px-4 py-2 rounded-lg font-medium"
           onClick={async () => await loginWithRedirect()}
         >
-          LogIn
+          🔐 Log In
         </Button>
       )}
-    </span>
+    </nav>
   );
 };
 

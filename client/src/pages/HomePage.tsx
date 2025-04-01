@@ -16,51 +16,49 @@ const HomePage = () => {
   return (
     <div className="flex items-center justify-center flex-col gap-10  bg-slate-100">
       <HomeImg />
-      <div className="bg-gradient-to-br from-orange-400 to-orange-100 w-[90%] md:w-[80%] rounded-3xl shadow-2xl py-10 px-8 flex flex-col items-center justify-center gap-6 -mt-20 transition-transform hover:scale-105 duration-300 border-t-4 border-orange-600 relative overflow-hidden">
-  {/* Decorative Elements */}
-  <div className="absolute top-0 left-0 w-16 h-16 bg-orange-500 opacity-20 rounded-full transform -translate-x-6 -translate-y-6"></div>
-  <div className="absolute bottom-0 right-0 w-24 h-24 bg-orange-300 opacity-20 rounded-full transform translate-x-8 translate-y-8"></div>
 
-  {/* Title */}
-  <h1 className="text-5xl md:text-4xl font-extrabold text-white tracking-tight drop-shadow-lg flex items-center gap-3">
-    <span role="img" aria-label="Fast Delivery">🚀</span> Fast & Fresh Delivery
-  </h1>
+      <div className="relative w-[90%] md:w-[80%] max-w-4xl mx-auto flex flex-col items-center justify-center bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+        {/* 🔹 Floating Decorative Elements */}
+        <div className="absolute -top-4 -left-4 w-12 h-12 md:w-16 md:h-16 bg-orange-500 opacity-30 rounded-full animate-pulse"></div>
+        <div className="absolute -bottom-4 -right-4 w-14 h-14 md:w-20 md:h-20 bg-yellow-400 opacity-25 rounded-full animate-pulse"></div>
 
-  {/* Subtitle */}
-  <p className="text-lg md:text-xl text-orange-900 font-medium text-center">
-    Bringing Deliciousness Right to Your Doorstep!
-  </p>
+        {/* 🚀 Title */}
+        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 text-center flex items-center gap-3 md:gap-4">
+          <span role="img" aria-label="Fast Delivery">
+            🚀
+          </span>
+          Fast & Fresh Delivery
+        </h1>
 
-  {/* Search Bar */}
-  <div className="w-full max-w-md">
-    <SearchBar
-      placeHolder="Search your city or town..."
-      onSubmit={handleSearchSubmit}
-    />
-  </div>
+        {/* 📝 Subtitle */}
+        <p className="text-lg md:text-xl text-gray-700 font-medium text-center mt-3">
+          Bringing Deliciousness Right to Your Doorstep!
+        </p>
 
+        {/* 🔍 Search Bar */}
+        <div className="w-full  lg:max-w-[80%] mt-6">
+          <SearchBar
+            placeHolder="Search your city or town..."
+            onSubmit={handleSearchSubmit}
+          />
+        </div>
 
-  <button
-  onClick={() => handleSearchSubmit({ searchQuery: "Kerala" })}
-  className="mt-4 bg-orange-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-orange-700 transition-all flex items-center gap-2 text-lg font-semibold"
->
-  Explore Now
-  <span className="transform transition-transform duration-300 group-hover:translate-x-1">
-    👉
-  </span>
-</button>
-
-</div>
-
-
+        {/* 📍 Explore Button */}
+        <button
+          onClick={() => handleSearchSubmit({ searchQuery: "Kerala" })}
+          className="mt-6 bg-gradient-to-r from-orange-600 to-yellow-500 text-white text-lg font-semibold py-3 px-6 rounded-full shadow-lg hover:scale-105 transition-transform"
+        >
+          Explore Now 🚀
+        </button>
+      </div>
 
       <KeralaDistrictsCarousel />
 
-      <div className="grid md:grid-cols-2 gap-5 px-1 mb-14">
+      <div className="grid items-center justify-center grid-cols-1 md:grid-cols-2 gap-5 px-1 mb-14">
         <img
-          src="/landingImg.avif"
+          src="/food-delivery.jpg"
           alt="img"
-          className="mix-blend-multiply shadow-lg"
+          className="mix-blend-multiply"
         />
         <div className="flex items-center justify-center flex-col gap-1">
           <h3 className="text-3xl font-semibold">

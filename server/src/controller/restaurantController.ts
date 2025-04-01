@@ -4,6 +4,9 @@ import Restaurant from "../models/restaurant";
 import mongoose from "mongoose";
 import Order from "../models/order";
 
+
+
+
 const uploadImage = async (file: Express.Multer.File) => {
   const image = file;
   const base64Image = Buffer.from(image.buffer).toString("base64");
@@ -31,7 +34,7 @@ export const createRestaurant = async (req: Request, res: Response) => {
     const restaurant = new Restaurant(req.body);
     restaurant.user = new mongoose.Types.ObjectId(req.userId);
     restaurant.imageUrl = imageUrl;
-    restaurant.lastUpdated = new Date();
+    restaurant.lastUpdated = new Date(); 
     restaurant.save();
 
     res.status(201).json({

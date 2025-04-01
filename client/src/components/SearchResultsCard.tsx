@@ -11,7 +11,7 @@ const SearchResultsCard = ({ restaurant }: Props) => {
   return (
     <Link
       to={`/restaurantDetails/${restaurant._id}`}
-      className="grid grid-cols-[2fr_3fr] gap-5 group"
+      className="grid grid-cols-1 sm:grid-cols-[2fr_3fr] gap-5 group"
     >
       <AspectRatio ratio={16 / 9}>
         <img
@@ -28,22 +28,22 @@ const SearchResultsCard = ({ restaurant }: Props) => {
           </h3>
 
           <div id="card-content" className="grid md:grid-cols-2 gap-2">
-            <div className="flex flex-row flex-wrap max-w-[300px] mr-1">
+            <div className="flex flex-row flex-wrap max-w-[300px] mr-1 shadow-sm text-sm p-1">
               {restaurant.cuisines.map((item, index) => (
                 <span className="flex" key={index}>
-                  <span className="text-gray-800 font-normal">{item}</span>
+                  <span className=" text-indigo-700 font-medium">{item}</span>
                   {index < restaurant.cuisines.length - 1 && <Dot />}
                 </span>
               ))}
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 font-semibold">
               <div className="flex items-center gap-2 text-green-600">
                 <Clock className="text-green-600" />
                 {restaurant.estimatedDeliveryTime} mins
               </div>
 
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 font-semibold">
                 <Banknote />
                 Delivery from &#8377;{" "}
                 {parseInt(restaurant.deliveryPrice).toFixed(2)}

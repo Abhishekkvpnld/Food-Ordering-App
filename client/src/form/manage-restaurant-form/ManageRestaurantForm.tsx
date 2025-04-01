@@ -12,6 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Restaurant } from "@/types";
 import { useEffect } from "react";
 
+
+
+
 const formSchema = z
   .object({
     restaurantName: z.string({
@@ -50,6 +53,10 @@ const formSchema = z
     path: ["imageFile"],
   });
 
+
+
+
+
 type RestaurantFormData = z.infer<typeof formSchema>;
 
 type Props = {
@@ -70,7 +77,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
   useEffect(() => {
     if (!restaurant) {
       return;
-    }
+    };
 
     const formatetdeliveryPrice = parseInt(
       (restaurant.deliveryPrice)

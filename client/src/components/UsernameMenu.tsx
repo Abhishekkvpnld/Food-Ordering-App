@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { Separator } from "@radix-ui/react-separator";
-import { CircleUserRound } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
@@ -15,31 +15,34 @@ const UsernameMenu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center justify-center gap-2 font-semibold">
-        <CircleUserRound />
-        {user?.name}
+      <DropdownMenuTrigger className="flex items-center gap-3 px-4 py-2 rounded-full border border-gray-300 bg-white shadow-sm hover:shadow-lg transition-all">
+        <User size={32} className="p-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-md" />
+        <span className="font-semibold text-gray-800">{user?.name}</span>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="flex mt-2 item items-center justify-center gap-2 flex-col flex-1 bg-gray-300 rounded-md py-3 px-4 ml-8">
-        <DropdownMenuItem>
-          <Link to={"/user-profile"} className="font-semibold">
-            User Profile
+      <DropdownMenuContent className="flex flex-col mt-3 p-4 bg-white shadow-xl rounded-xl border max-w-64 z-10">
+        <DropdownMenuItem className="hover:bg-gray-100 p-2 rounded-md transition-all">
+          <Link to={"/user-profile"} className="font-semibold text-gray-800 flex items-center">
+            🧑‍💻 User Profile
           </Link>
         </DropdownMenuItem>
 
-        <Separator />
+        <Separator className="my-2 bg-gray-300" />
 
-        <DropdownMenuItem>
-          <Link to={"/manage-restaurant"} className="font-semibold">
-            Manage Restaurant
+        <DropdownMenuItem className="hover:bg-gray-100 p-2 rounded-md transition-all">
+          <Link to={"/manage-restaurant"} className="font-semibold text-gray-800 flex items-center">
+            🍽️ Manage Restaurant
           </Link>
         </DropdownMenuItem>
 
-        <Separator />
+        <Separator className="my-2 bg-gray-300" />
 
         <DropdownMenuItem>
-          <Button className="text-white bg-red-700" onClick={() => logout()}>
-            Logout
+          <Button 
+            className="w-full text-white bg-red-600 hover:bg-red-700 transition-all rounded-lg p-2 mt-2"
+            onClick={() => logout()}
+          >
+            <LogOut className="mr-2"/> Logout
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>

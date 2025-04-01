@@ -7,6 +7,9 @@ import {
 import OrderItemCard from "@/components/OrderItemCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ManageRestaurantForm from "@/form/manage-restaurant-form/ManageRestaurantForm";
+import LoadingSpinner from "../components/LoadingSpinner";
+
+
 
 const ManageRestaurant = () => {
   const { createRestaurant, isLoading: createLoading } = useCreateRestaurant();
@@ -41,7 +44,7 @@ const ManageRestaurant = () => {
           className="flex items-center justify-center"
         >
           {getOrderLoading ? (
-            <p>Loading...</p>
+           <LoadingSpinner/>
           ) : (
             <ManageRestaurantForm
               restaurant={restaurant}

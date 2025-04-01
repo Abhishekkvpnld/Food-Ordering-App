@@ -35,7 +35,7 @@ const KeralaDistrictsCarousel = () => {
   const loopedDistricts = [...districts, ...districts];
 
   return (
-    <div className="overflow-hidden w-full max-w-4xl mx-auto my-10 px-4">
+    <div className="overflow-hidden max-w-[100vw] mx-auto my-10 px-4">
       <motion.div
         className="flex"
         initial={{ x: "0%" }}

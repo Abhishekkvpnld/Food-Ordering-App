@@ -82,7 +82,7 @@ export const getRestaurant = async (req: Request, res: Response) => {
     if (!checkRestaurant) throw new Error("Restaurant not Available...❌");
 
     res.status(200).json({
-      success: true,
+      success: true, 
       error: false,
       data: checkRestaurant,
     });

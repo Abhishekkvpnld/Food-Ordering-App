@@ -5,7 +5,7 @@ import SearchBar, { SearchForm } from "@/components/SearchBar";
 import SearchResults from "@/components/SearchResults";
 import SearchResultsCard from "@/components/SearchResultsCard";
 import SortOptionDropDown from "@/components/SortOptionDropDown";
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 export type SearchState = {
@@ -16,6 +16,8 @@ export type SearchState = {
 };
 
 const SearchPage = () => {
+  const { city } = useParams();
+
   const [searchState, setSearchState] = useState<SearchState>({
     page: 1,
     searchQuery: "",
@@ -24,94 +26,99 @@ const SearchPage = () => {
   });
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-
-  const { city } = useParams();
   const { results, isLoading } = useSearchRestaurant(city, searchState);
 
-  const setSortOption = (sortOption: string) => {
-    setSearchState((prev) => ({
-      ...prev,
-      sortOptions: sortOption,
-      page: 1,
-    }));
-  };
+  // Memoize search state to avoid unnecessary re-renders
+  const memoizedSearchState = useMemo(() => searchState, [searchState]);
 
-  const setSelectedCuisines = (selectedCuisines: string[]) => {
-    setSearchState((prev) => ({
-      ...prev,
-      selectedCuisines,
-      page: 1,
-    }));
-  };
+  // Handlers wrapped in useCallback for performance optimization
+  const setSortOption = useCallback((sortOption: string) => {
+    setSearchState((prev) => ({ ...prev, sortOptions: sortOption, page: 1 }));
+  }, []);
 
-  const handleSetPage = (page: number) => {
-    setSearchState((prev) => ({
-      ...prev,
-      page,
-    }));
-  };
+  const setSelectedCuisines = useCallback((selectedCuisines: string[]) => {
+    setSearchState((prev) => ({ ...prev, selectedCuisines, page: 1 }));
+  }, []);
 
-  const setSearchSubmit = (searchFormData: SearchForm) => {
+  const handleSetPage = useCallback((page: number) => {
+    setSearchState((prev) => ({ ...prev, page }));
+  }, []);
+
+  const setSearchSubmit = useCallback((searchFormData: SearchForm) => {
     setSearchState((prev) => ({
       ...prev,
       searchQuery: searchFormData.searchQuery,
       page: 1,
     }));
-  };
+  }, []);
 
-  const resetSearch = () => {
-    setSearchState((prev) => ({
-      ...prev,
-      searchQuery: "",
-      page: 1,
-    }));
-  };
+  const resetSearch = useCallback(() => {
+    setSearchState((prev) => ({ ...prev, searchQuery: "", page: 1 }));
+  }, []);
 
+  // Display loading state
   if (isLoading) {
-    <span>Loading...</span>;
+    return (
+      <div className="flex justify-center items-center h-screen text-xl font-semibold text-gray-600">
+        Loading restaurants...
+      </div>
+    );
   }
 
+  // Handle no results
   if (!results?.restaurants || !city) {
-    return <span>No results found...</span>;
+    return (
+      <div className="flex justify-center items-center h-screen text-xl font-semibold text-red-500">
+        No results found for "{city}".
+      </div>
+    );
   }
 
   return (
-    <div className="grid w-[100vw] px-16 grid-cols-1 gap-4 lg:grid-cols-[250px_1fr]">
-      <div id="cuisines-list" className="mt-1">
+    <div className="grid w-full px-6 lg:px-16 grid-cols-1 gap-4 lg:grid-cols-[250px_1fr]">
+      {/* Cuisines Filter Section */}
+      <aside id="cuisines-list" className="mt-1">
         <CuisinesFilter
-          selectedCuisines={searchState.selectedCuisines}
+          selectedCuisines={memoizedSearchState.selectedCuisines}
           onChange={setSelectedCuisines}
           isExpanded={isExpanded}
           onExpandedClick={() => setIsExpanded((prev) => !prev)}
         />
-      </div>
-      <div id="main-content" className="flex flex-col gap-4">
+      </aside>
+
+      {/* Main Content Section */}
+      <main id="main-content" className="flex flex-col gap-4">
+        {/* Search Bar */}
         <SearchBar
           placeHolder="Search by Cuisines or Restaurant name..."
           onSubmit={setSearchSubmit}
           onReset={resetSearch}
-          searchQuery={searchState.searchQuery}
+          searchQuery={memoizedSearchState.searchQuery}
         />
 
+        {/* Sort & Results Count */}
         <div className="flex justify-between flex-col gap-3 lg:flex-row">
           <SearchResults city={city} total={results?.pagination?.total} />
-
           <SortOptionDropDown
-            sortOptions={searchState.sortOptions}
-            onChange={(value) => setSortOption(value)}
+            sortOptions={memoizedSearchState.sortOptions}
+            onChange={setSortOption}
           />
         </div>
 
-        {results?.restaurants.map((restaurant, index) => (
-          <SearchResultsCard restaurant={restaurant} key={index} />
-        ))}
+        {/* Search Results */}
+        <section>
+          {results?.restaurants.map((restaurant, index) => (
+            <SearchResultsCard restaurant={restaurant} key={index} />
+          ))}
+        </section>
 
+        {/* Pagination */}
         <PaginationSection
           page={results?.pagination?.page}
           pages={results?.pagination?.pages}
           onPageChange={handleSetPage}
         />
-      </div>
+      </main>
     </div>
   );
 };

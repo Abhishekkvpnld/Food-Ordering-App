@@ -10,18 +10,18 @@ const HomeImg = () => {
   };
 
   return (
-    <div className="flex items-start justify-center min-h-[70vh] flex-wrap md:flex-row">
+    <div className="flex items-center flex-col justify-center min-h-[70vh] flex-wrap md:flex-row">
       {/* Image Section */}
       <div className="flex items-center justify-center flex-1">
         <img
           src="/homeImg.webp"
-          className="hover:scale-110 transition-all mix-blend-multiply w-[70%] h-[300px]"
+          className="hover:scale-110 transition-all mix-blend-multiply w-[70%] lg:h-[300px]"
           alt="img"
         />
       </div>
 
       {/* Text Section */}
-      <div className="mt-4 flex items-start flex-col h-[300px] justify-center flex-1 pr-10">
+      <div className="mt-4 flex items-center flex-col h-[300px] justify-center flex-1">
         <p className="text-lg text-slate-600 font-semibold animate-bounce text-center md:text-left">
           <span className="text-orange-500">Discover</span> delicious dishes from
           around the world, delivered to your{" "}

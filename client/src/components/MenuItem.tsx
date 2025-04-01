@@ -6,7 +6,7 @@ type Props = {
   addToCart:(menuItem:MenuItemType)=>void
 };
 
-const MenuItem = ({ restaurant,addToCart }: Props) => {
+const   MenuItem = ({ restaurant,addToCart }: Props) => {
   return (
     <div className="mt-2">
       <span className="text-xl font-bold">Menu</span>

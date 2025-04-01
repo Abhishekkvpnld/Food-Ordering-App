@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import { IoMdMenu } from "react-icons/io";
-import { CircleUserIcon } from "lucide-react";
+import { User } from "lucide-react";
 import MobileNavLinks from "./MobileNavLinks";
 
 const MobileNav = () => {
@@ -23,13 +23,20 @@ const MobileNav = () => {
 
       <SheetContent>
         <SheetTitle className="flex items-center justify-center gap-2">
-          <CircleUserIcon className="size-10 mb-2"/>
-          {isAuthenticated ? <span>{user?.name}</span> : <span>Welcome to DeliGo</span>}
+          <User
+            size={30}
+            className="border rounded-full p-1 bg-blue-800 text-white"
+          />
+          {isAuthenticated ? (
+            <span>{user?.name}</span>
+          ) : (
+            <span>Welcome to DeliGo</span>
+          )}
         </SheetTitle>
 
         <Separator />
         {isAuthenticated ? (
-         <MobileNavLinks/>
+          <MobileNavLinks />
         ) : (
           <SheetDescription className="flex items-center justify-center flex-col mt-4">
             <Button
