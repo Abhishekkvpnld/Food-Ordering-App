@@ -54,6 +54,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       restaurant._id.toString()
     );
 
+    console.log("session url",session.url)/////////////////////////////////////////////////////
     if (!session.url) throw new Error("Error creating stripe session...❌");
 
     await newOrder.save();
@@ -87,7 +88,7 @@ const createLineItems = (
     const line_item: Stripe.Checkout.SessionCreateParams.LineItem = {
       price_data: {
         currency: "INR",
-        unit_amount: menuItem.price * 100,
+        unit_amount: menuItem.price,
         product_data: {
           name: menuItem.name,
         },
@@ -115,7 +116,7 @@ const createSession = async (
           display_name: "Delivery",
           type: "fixed_amount",
           fixed_amount: {
-            amount: deliveryPrice * 100,
+            amount: deliveryPrice,
             currency: "INR",
           },
         },
@@ -126,8 +127,8 @@ const createSession = async (
       orderId,
       restaurantId,
     },
-    success_url: `${FRONTEND_URL}/order-status?success=true`,
-    cancel_url: `${FRONTEND_URL}/restaurantDetails/${restaurantId}?canceled=true`,
+    success_url: `${FRONTEND_URL}/order-status/success`,
+    cancel_url: `${FRONTEND_URL}/order-status/cancel`,
   });
 
   return sessionData;
@@ -140,32 +141,49 @@ export const stripeWebhookHandler = async (req: Request, res: Response) => {
 
   try {
     const sig = req.headers["stripe-signature"];
-    event = STRIPE.webhooks.constructEvent(
-      req.body,
-      sig as string,
-      STRIPE_ENDPOINT_SECRET
-    );
+    
+    if (!sig) {
+      return res.status(400).json({ success: false, message: "Missing Stripe signature." });
+    }
+
+    event = STRIPE.webhooks.constructEvent(req.body, sig, STRIPE_ENDPOINT_SECRET);
   } catch (error: any) {
-    console.log(error);
-    res.status(400).json({
-      success: false,
-      error: true,
-      message: `Webhook error : ${error.message}`,
-    });
+    console.error("Webhook Error:", error.message);
+    return res.status(400).json({ success: false, message: `Webhook error: ${error.message}` });
   }
 
   if (event?.type === "checkout.session.completed") {
-    const order = await Order.findById(event.data.object.metadata?.orderId);
-    if (!order) throw new Error("Order not found...❌");
+    try {
+      const orderId = event.data.object.metadata?.orderId;
+      
+      if (!orderId) {
+        return res.status(400).json({ success: false, message: "Order ID missing in metadata." });
+      }
 
-    order.totalAmount = event.data.object.amount_total;
-    order.status = "Paid";
+      const order = await Order.findById(orderId);
+      if (!order) {
+        return res.status(404).json({ success: false, message: "Order not found." });
+      }
 
-    await order.save();
+console.log(event.data.object.amount_total,"✅✅✅✅✅✅")
+
+      order.totalAmount = event.data.object.amount_total;
+      order.status = "Paid";
+
+      await order.save();
+
+      return res.status(200).json({ success: true, message: "Order payment successful!" });
+    } catch (err: any) {
+      console.error("Order Processing Error:", err.message);
+      return res.status(500).json({ success: false, message: "Internal server error." });
+    }
   }
 
-  res.status(200).send();
+  return res.status(400).json({ success: false, message: "Unhandled event type." });
 };
+
+
+
 
 export const getOrderDetails = async (req: Request, res: Response) => {
   try {
@@ -180,6 +198,8 @@ export const getOrderDetails = async (req: Request, res: Response) => {
       error: false,
       data: allOrders,
     });
+
+
   } catch (error) {
     console.log(error);
     res.status(500).json({

@@ -8,6 +8,8 @@ import ManageRestaurant from "./pages/ManageRestaurant";
 import SearchPage from "./pages/SearchPage";
 import RestaurantDetailsPage from "./pages/RestaurantDetailsPage";
 import OrderStatuspage from "./pages/OrderStatuspage";
+import Cancel from "./pages/Cancel";
+import Success from "./pages/Success";
 
 const AppRoutes = () => {
   return (
@@ -67,6 +69,23 @@ const AppRoutes = () => {
         element={
           <Layouts>
             <OrderStatuspage />
+          </Layouts>
+        }
+      />
+      <Route
+        path="/order-status/success"
+        element={
+          <Layouts>
+            <Success />
+          </Layouts>
+        }
+      />
+
+      <Route
+        path="/order-status/cancel"
+        element={
+          <Layouts>
+            <Cancel />
           </Layouts>
         }
       />

@@ -26,18 +26,14 @@ const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
     useCreateCheckoutSession();
 
   const getTotalPrice = () => {
-    const totalPrice = cartItems.reduce(
-      (total, cartItem) => total + cartItem.price * cartItem.quantity,
-      0
-    );
+    const totalPrice = cartItems.reduce((total, cartItem) => total + cartItem.price * cartItem.quantity,0);
 
     const totalWithDeliveryPrice = totalPrice + restaurant.deliveryPrice;
 
     return totalWithDeliveryPrice;
   };
 
-  const onCheckout = async (userFormData: UserFormData) => {
-    console.log(userFormData);
+  const onCheckout = async (userFormData: UserFormData) => {;
 
     if (!restaurant) {
       return;

@@ -9,47 +9,55 @@ type Props = {
 };
 
 const OrderDetailsHeader = ({ order }: Props) => {
+
   const getExpectedDelivery = () => {
     const created = new Date(order.createdAt);
-
     created.setMinutes(
       created.getMinutes() + parseInt(order.restaurant.estimatedDeliveryTime)
     );
 
     const hours = created.getHours();
     const minutes = created.getMinutes();
-
     const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
     return `${hours}:${paddedMinutes}`;
   };
 
   const getOrderInfo = () => {
-    return (
-      ORDER_STATUS.find((i) => i.value === order.status) || ORDER_STATUS[0]
-    );
+    return ORDER_STATUS.find((i) => i.value === order.status) || ORDER_STATUS[0];
   };
 
   return (
-    <div className="w-full px-5 py-2 rounded-md mt-2 border border-gray-700">
-      <h1 className="font-semibold tracking-tighter flex flex-col gap-5 md:flex-row md:justify-between ">
-        <span>Order Status : {getOrderInfo().label}</span>
-        <span>Expected By : {getExpectedDelivery()}</span>
-      </h1>
+    <div className="w-full bg-white shadow-sm hover:shadow-lg transition-all rounded-lg p-5 mt-4 border border-gray-300">
+      <div className="flex flex-col lg:flex-row justify-between items-center pb-4 border-b">
+        <h1 className="text-lg font-semibold text-gray-800">
+          Order Status:{" "}
+          <span className="text-blue-600">{getOrderInfo().label}</span>
+        </h1>
+        <h2 className="text-md font-medium text-gray-600">
+          Expected By: <span className="text-green-600">{getExpectedDelivery()}</span>
+        </h2>
+      </div>
+
       <Progress
-        className="animate-pulse mt-3 mb-1 w-[100%] bg-green-400 "
+        className="mt-4 w-full transition-all duration-300 ease-in-out"
         value={getOrderInfo().progressValue}
+        color="green"
       />
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 mt-5">
+
         <OrderStatusDetails order={order} />
-        <AspectRatio ratio={20 / 5}>
-          <img
-            src={order.restaurant.imageUrl}
-            alt="img"
-            className="object-cover h-full w-full"
-          />
-        </AspectRatio>
+        
+        <div className="relative">
+          <AspectRatio ratio={16 / 11} className="overflow-hidden rounded-lg shadow-md">
+            <img
+              src={order.restaurant.imageUrl}
+              alt="Restaurant Image"
+              className="object-cover h-full w-full rounded-lg"
+            />
+          </AspectRatio>
+        </div>
       </div>
     </div>
   );

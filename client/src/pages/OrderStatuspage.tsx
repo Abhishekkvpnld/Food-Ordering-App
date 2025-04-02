@@ -27,14 +27,11 @@ const OrderStatusPage = () => {
       <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
         🛒 Order History
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {allOrders.map((order, index) => (
-          <div
-            key={index}
-            className="bg-white shadow-md rounded-xl p-5 transition-transform transform hover:scale-105"
-          >
-            <OrderStatusCard order={order} />
-          </div>
+      
+            <OrderStatusCard  key={index} order={order} />
+        
         ))}
       </div>
     </div>

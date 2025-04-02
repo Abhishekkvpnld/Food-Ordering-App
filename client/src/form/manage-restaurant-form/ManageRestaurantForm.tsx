@@ -1,7 +1,7 @@
 import RestaurantFormSection from "@/form/manage-restaurant-form/RestaurantFormSection";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Separator } from "@radix-ui/react-separator";
 import CuisinesSection from "./CuisinesSection";
@@ -11,9 +11,6 @@ import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import { Restaurant } from "@/types";
 import { useEffect } from "react";
-
-
-
 
 const formSchema = z
   .object({
@@ -53,10 +50,6 @@ const formSchema = z
     path: ["imageFile"],
   });
 
-
-
-
-
 type RestaurantFormData = z.infer<typeof formSchema>;
 
 type Props = {
@@ -77,29 +70,27 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
   useEffect(() => {
     if (!restaurant) {
       return;
-    };
+    }
 
-    const formatetdeliveryPrice = parseInt(
-      (restaurant.deliveryPrice)
-    ).toFixed(2);
+    const formatetdeliveryPrice = parseInt(restaurant.deliveryPrice).toFixed(2);
     const formatedMenuItems = restaurant.menuItems.map((item) => ({
       ...item,
       price: parseInt((item.price / 100).toFixed(2)),
     }));
 
-
     const updatedrestaurantData = {
       ...restaurant,
-      deliveryPrice:parseInt( formatetdeliveryPrice),
+      deliveryPrice: parseInt(formatetdeliveryPrice),
       menuItems: formatedMenuItems,
-      estimatedDeliveryTime: parseInt(restaurant.estimatedDeliveryTime), 
-      cuisines: restaurant.cuisines.length > 0 ? [restaurant.cuisines[0], ...restaurant.cuisines.slice(1)] : [],
-   
+      estimatedDeliveryTime: parseInt(restaurant.estimatedDeliveryTime),
+      cuisines:
+        restaurant.cuisines.length > 0
+          ? [restaurant.cuisines[0], ...restaurant.cuisines.slice(1)]
+          : [],
     };
     form.reset(updatedrestaurantData);
   }, [form, restaurant]);
 
-  
   const onSubmit = (formDataJson: RestaurantFormData) => {
     const formData = new FormData();
 
@@ -168,7 +159,7 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
             Submit
           </Button>
         )}
-      </form> 
+      </form>
     </Form>
   );
 };
