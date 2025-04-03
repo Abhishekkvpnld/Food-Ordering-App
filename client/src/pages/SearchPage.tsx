@@ -28,21 +28,26 @@ const SearchPage = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const { results, isLoading } = useSearchRestaurant(city, searchState);
 
+
   // Memoize search state to avoid unnecessary re-renders
   const memoizedSearchState = useMemo(() => searchState, [searchState]);
+
 
   // Handlers wrapped in useCallback for performance optimization
   const setSortOption = useCallback((sortOption: string) => {
     setSearchState((prev) => ({ ...prev, sortOptions: sortOption, page: 1 }));
   }, []);
 
+  
   const setSelectedCuisines = useCallback((selectedCuisines: string[]) => {
     setSearchState((prev) => ({ ...prev, selectedCuisines, page: 1 }));
   }, []);
 
+
   const handleSetPage = useCallback((page: number) => {
     setSearchState((prev) => ({ ...prev, page }));
   }, []);
+
 
   const setSearchSubmit = useCallback((searchFormData: SearchForm) => {
     setSearchState((prev) => ({
@@ -52,30 +57,60 @@ const SearchPage = () => {
     }));
   }, []);
 
+
   const resetSearch = useCallback(() => {
     setSearchState((prev) => ({ ...prev, searchQuery: "", page: 1 }));
   }, []);
 
-  // Display loading state
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen text-xl font-semibold text-gray-600">
-        Loading restaurants...
-      </div>
-    );
-  }
 
-  // Handle no results
-  if (!results?.restaurants || !city) {
-    return (
-      <div className="flex justify-center items-center h-screen text-xl font-semibold text-red-500">
-        No results found for "{city}".
-      </div>
-    );
-  }
+
+// Display loading state
+if (isLoading) {
+  return (
+    <div className="flex flex-col justify-center items-center h-screen text-center">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-600 border-solid mb-4"></div>
+      <h2 className="text-2xl font-semibold text-gray-700">
+        Fetching delicious restaurants...
+      </h2>
+      <p className="text-gray-500 text-lg mt-2">
+        Please wait while we load your options.
+      </p>
+    </div>
+  );
+}
+
+
+
+// Handle no results
+if (!results?.restaurants || !city) {
+  return (
+    <div className="flex flex-col justify-center items-center h-screen text-center">
+      <img
+        src="/no result.jpg"
+        alt="No results"
+        className="object-cover mb-4 rounded-lg"
+      />
+      <h2 className="text-2xl md:text-3xl font-bold text-red-600 mb-2">
+        Oops! No results found
+      </h2>
+      <p className="text-gray-500 text-lg md:text-xl mb-4">
+        Sorry, we couldn't find any restaurants in{" "}
+        <span className="font-semibold text-indigo-600">"{city}"</span>.
+      </p>
+      <button
+        onClick={() => window.history.back()}
+        className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-lg rounded-md shadow-md transition-all duration-300"
+      >
+        Go Back
+      </button>
+    </div>
+  );
+}
+
 
   return (
     <div className="grid w-full px-6 lg:px-16 grid-cols-1 gap-4 lg:grid-cols-[250px_1fr]">
+      
       {/* Cuisines Filter Section */}
       <aside id="cuisines-list" className="mt-1">
         <CuisinesFilter

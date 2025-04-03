@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomeImg = () => {
   const navigate = useNavigate();
-  let place = "Kerala";
+  let place = "India";
 
   const handleFoods = () => {
     navigate(`/search/${place}`);

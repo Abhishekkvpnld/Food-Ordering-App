@@ -14,7 +14,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col gap-10  bg-slate-100">
+    <div className="flex items-center justify-center flex-col  bg-slate-100">
       <HomeImg />
 
       <div className="relative w-[90%] md:w-[80%] max-w-4xl mx-auto flex flex-col items-center justify-center bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
@@ -38,14 +38,14 @@ const HomePage = () => {
         {/* 🔍 Search Bar */}
         <div className="w-full  lg:max-w-[80%] mt-6">
           <SearchBar
-            placeHolder="Search your city or town..."
+            placeHolder="Search your city or district..."
             onSubmit={handleSearchSubmit}
           />
         </div>
 
         {/* 📍 Explore Button */}
         <button
-          onClick={() => handleSearchSubmit({ searchQuery: "Kerala" })}
+          onClick={() => handleSearchSubmit({ searchQuery: "kannur" })}
           className="mt-6 bg-gradient-to-r from-orange-600 to-yellow-500 text-white text-lg font-semibold py-3 px-6 rounded-full shadow-lg hover:scale-105 transition-transform"
         >
           Explore Now 🚀

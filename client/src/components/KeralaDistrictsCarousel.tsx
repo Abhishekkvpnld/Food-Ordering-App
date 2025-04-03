@@ -48,8 +48,8 @@ const KeralaDistrictsCarousel = () => {
             key={index}
             className={`min-w-[160px] sm:min-w-[200px] cursor-pointer md:min-w-[220px] mx-2 p-4 text-center text-lg font-semibold rounded-lg shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl ${
               index % 2 === 0
-                ? "bg-gradient-to-r from-orange-400 to-orange-500 text-white"
-                : "bg-gradient-to-r from-blue-400 to-blue-500 text-white"
+                ? "bg-gradient-to-r from-yellow-400 to-amber-500 text-black"
+                : "bg-gradient-to-r from-purple-600 to-violet-700 text-white"
             }`}
           >
             {index % 2 === 0 ? (

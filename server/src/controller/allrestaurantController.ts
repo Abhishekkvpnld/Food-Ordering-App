@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import Restaurant from "../models/restaurant";
 
+
+
 export const searchRestaurant = async (req: Request, res: Response) => {
   try {
     const city = req.params.city;
-
     const searchQuery = (req.query.searchQuery as string) || "";
     const selectedCuisines = (req.query.selectedCuisines as string) || "";
     const sortOption = (req.query.sortOption as string) || "lastUpdated";
@@ -12,11 +13,21 @@ export const searchRestaurant = async (req: Request, res: Response) => {
 
     let query: any = {};
 
-    query["city"] = new RegExp(city, "i");
+    // ✅ Search by city OR country
+    query["$or"] = [
+      { city: new RegExp(city, "i") },
+      { country: new RegExp(city, "i") },
+    ];
+
+    // ✅ Check if any restaurants exist
     const checkCity = await Restaurant.countDocuments(query);
+    if (checkCity === 0) {
+      throw new Error(
+        `No restaurants found in "${city}". Please try another location.`
+      );
+    }
 
-    if (checkCity === 0) throw new Error("Restaurant not found...✅");
-
+    // ✅ Filter by cuisines
     if (selectedCuisines) {
       const cuisinesArray = selectedCuisines
         .split(",")
@@ -25,33 +36,36 @@ export const searchRestaurant = async (req: Request, res: Response) => {
       query["cuisines"] = { $all: cuisinesArray };
     }
 
+    // ✅ Search in restaurantName, cuisines, city, and country
     if (searchQuery) {
       const searchRegex = new RegExp(searchQuery, "i");
-      query["$or"] = [
+      query["$or"].push(
         { restaurantName: searchRegex },
-        { cuisines: { $in: [searchRegex] } },
-      ];
+        { cuisines: { $in: [searchRegex] } }
+      );
     }
 
+    // Pagination
     const pageSize = 10;
     const skip = (page - 1) * pageSize;
 
-    const restaurants = await Restaurant.find(query)
-      .sort({ [sortOption]: 1 })
-      .skip(skip)
-      .limit(pageSize)
-      .lean();
+    // Fetch data
+    const [restaurants, total] = await Promise.all([
+      Restaurant.find(query)
+        .sort({ [sortOption]: 1 })
+        .skip(skip)
+        .limit(pageSize)
+        .lean(),
+      Restaurant.countDocuments(query),
+    ]);
 
-    const total = await Restaurant.countDocuments(query);
-
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       error: false,
-      message: "",
       data: {
         restaurants,
         pagination: {
-          total: total,
+          total,
           page,
           pages: Math.ceil(total / pageSize),
         },
@@ -74,6 +88,8 @@ export const searchRestaurant = async (req: Request, res: Response) => {
   }
 };
 
+
+
 export const getRestaurant = async (req: Request, res: Response) => {
   try {
     const restaurantId = req.params.restaurantId;
@@ -82,7 +98,7 @@ export const getRestaurant = async (req: Request, res: Response) => {
     if (!checkRestaurant) throw new Error("Restaurant not Available...❌");
 
     res.status(200).json({
-      success: true, 
+      success: true,
       error: false,
       data: checkRestaurant,
     });

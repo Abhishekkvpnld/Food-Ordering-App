@@ -73,7 +73,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/order-status/success"
+        path="/order/success"
         element={
           <Layouts>
             <Success />
@@ -82,7 +82,7 @@ const AppRoutes = () => {
       />
 
       <Route
-        path="/order-status/cancel"
+        path="/order/cancel"
         element={
           <Layouts>
             <Cancel />

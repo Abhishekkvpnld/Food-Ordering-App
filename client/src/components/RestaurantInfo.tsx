@@ -14,29 +14,29 @@ type Props = {
 
 const RestaurantInfo = ({ restaurant }: Props) => {
   return (
-<Card className="bg-blue-100 p-1 m-2">
-  <CardHeader>
-    <CardTitle className="font-bold text-lg sm:text-xl md:text-2xl tracking-tight">
-      {restaurant?.restaurantName}
-    </CardTitle>
+    <Card className="bg-gradient-to-br from-purple-50 to-white p-5 rounded-lg hover:shadow-md border border-gray-300 transition-all duration-300">
+      <CardHeader>
+        <CardTitle className="font-extrabold text-xl sm:text-2xl md:text-3xl text-gray-800 tracking-tight">
+          {restaurant?.restaurantName}
+        </CardTitle>
 
-    <CardDescription className="font-semibold text-sm sm:text-base md:text-lg">
-      {restaurant?.country}, {restaurant?.city}
-    </CardDescription>
-  </CardHeader>
+        <CardDescription className="font-medium text-md sm:text-lg md:text-xl text-gray-600">
+          📍 {restaurant?.city}, {restaurant?.country}
+        </CardDescription>
+      </CardHeader>
 
-  <CardContent className="flex flex-wrap gap-2 mt-2">
-    {restaurant.cuisines.map((cuisine, index) => (
-      <span className="flex items-center" key={index}>
-        <span className="text-blue-600 font-semibold text-lg">
-          {cuisine}
-        </span>
-        {index < restaurant.cuisines.length - 1 && <Dot />}
-      </span>
-    ))}
-  </CardContent>
-</Card>
-
+      <CardContent className="flex flex-wrap gap-3 mt-3">
+        {restaurant.cuisines.map((cuisine, index) => (
+          <span
+            key={index}
+            className="flex items-center px-3 py-1 bg-purple-100 text-purple-700 font-semibold text-sm sm:text-md rounded-full shadow-sm"
+          >
+            {cuisine}
+            {index < restaurant.cuisines.length - 1 && <Dot className="text-gray-500 mx-1" />}
+          </span>
+        ))}
+      </CardContent>
+    </Card>
   );
 };
 

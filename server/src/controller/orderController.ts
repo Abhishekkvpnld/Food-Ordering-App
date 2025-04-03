@@ -5,7 +5,6 @@ import Stripe from "stripe";
 import Order from "../models/order";
 
 const STRIPE = new Stripe(process.env.STRIPE_SECRET_KEY as string);
-const FRONTEND_URL = process.env.FRONTEND_URL;
 const STRIPE_ENDPOINT_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
 
 type CheckoutSessionRequest = {
@@ -42,6 +41,8 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       createdAt: new Date(),
     });
 
+
+
     const lineItems = createLineItems(
       checkoutSessionRequest,
       restaurant.menuItems
@@ -72,6 +73,8 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
     });
   }
 };
+
+
 
 const createLineItems = (
   checkoutSessionRequest: CheckoutSessionRequest,
@@ -126,8 +129,8 @@ const createSession = async (
       orderId,
       restaurantId,
     },
-    success_url: `${FRONTEND_URL}/order-status/success`,
-    cancel_url: `${FRONTEND_URL}/order-status/cancel`,
+    success_url: `${process.env.FRONTEND_URL}/order/success`,
+    cancel_url: `${process.env.FRONTEND_URL}/order/cancel`,
   });
 
   return sessionData;
