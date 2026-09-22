@@ -28,19 +28,19 @@ const Header = () => {
             className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md ${
               scrolled
                 ? "bg-gradient-to-br from-orange-500 to-amber-500 shadow-orange-500/20"
-                : "bg-white/15 backdrop-blur-md border border-white/20 shadow-white/10"
+                : "bg-white/15 backdrop-blur-md border border-black/20 shadow-white/10"
             }`}
           >
             <Utensils
               size={18}
               className={`transition-colors duration-300 ${
-                scrolled ? "text-white" : "text-white"
+                scrolled ? "text-white" : "text-orange-500"
               }`}
             />
           </div>
           <span
             className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${
-              scrolled ? "text-gray-900" : "text-white"
+              scrolled ? "text-gray-900" : "text-red-500"
             }`}
           >
             Deli

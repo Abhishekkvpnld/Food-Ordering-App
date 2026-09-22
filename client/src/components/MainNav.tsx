@@ -33,7 +33,7 @@ const MainNav = ({ scrolled }: Props) => {
           className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ${
             scrolled
               ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20 hover:shadow-lg hover:shadow-orange-500/30 hover:scale-105"
-              : "bg-white/15 backdrop-blur-md border border-white/25 text-white hover:bg-white/25 hover:scale-105"
+              : "bg-white/15 backdrop-blur-md border border-white/25 text-red-500 hover:bg-white hover:text-black hover:scale-105"
           }`}
         >
           <LogIn size={16} />
