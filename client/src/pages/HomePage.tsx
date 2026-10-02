@@ -206,57 +206,298 @@ const HomePage = () => {
           </div>
         </motion.div>
       </section>
-
-      {/* ━━━ Download / CTA Section ━━━ */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-40 h-40 bg-orange-500 rounded-full blur-[100px]" />
-          <div className="absolute bottom-10 right-10 w-56 h-56 bg-amber-400 rounded-full blur-[120px]" />
+      {/* ━━━ Mobile App CTA Section ━━━ */}
+      <section className="relative overflow-hidden bg-[#0b0d10]">
+        {/* Background Glow */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-32 -left-32 w-96 h-96 bg-orange-500/20 rounded-full blur-[140px]" />
+          <div className="absolute -bottom-40 right-0 w-[500px] h-[500px] bg-amber-400/10 rounded-full blur-[160px]" />
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-4 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left — text */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-orange-300 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full mb-6 border border-white/10">
-              📱 Mobile App
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
-              Order takeaway{" "}
-              <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">
-                even faster
-              </span>
-            </h2>
-            <p className="text-gray-400 text-lg leading-relaxed mb-8 max-w-lg">
-              Download our mobile app for lightning-quick ordering, exclusive
-              deals, and real-time order tracking — all at your fingertips.
-            </p>
-            <img
-              src="/downloadImg.png"
-              alt="Download on App Store and Google Play"
-              className="h-12 sm:h-14 object-contain"
-            />
-          </motion.div>
+        {/* Decorative Lines */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-white/[0.04]" />
 
-          {/* Right — image */}
-          <motion.div
-            className="flex items-center justify-center"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
-            <img
-              src="/food-delivery.jpg"
-              alt="Food Delivery"
-              className="rounded-2xl shadow-2xl shadow-black/40 max-h-[380px] object-cover border border-white/10"
-            />
-          </motion.div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-8 items-center">
+            {/* ━━━ Left Content ━━━ */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7 }}
+              className="max-w-xl"
+            >
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.15 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-300 text-sm font-semibold mb-7"
+              >
+                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-orange-500 text-white text-xs">
+                  📱
+                </span>
+                Download Our App
+              </motion.div>
+
+              {/* Heading */}
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.05]">
+                Your favorite food,
+                <br />
+                <span className="bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400 bg-clip-text text-transparent">
+                  one tap away.
+                </span>
+              </h2>
+
+              {/* Description */}
+              <p className="mt-6 text-gray-400 text-base sm:text-lg leading-relaxed max-w-lg">
+                Discover delicious meals, exclusive deals, and fast delivery.
+                Everything you love about food ordering, right in your pocket.
+              </p>
+
+              {/* Features */}
+              <div className="grid grid-cols-2 gap-x-6 gap-y-5 mt-9 mb-10">
+                {[
+                  {
+                    icon: "⚡",
+                    title: "Faster Ordering",
+                    text: "Order in seconds",
+                  },
+                  {
+                    icon: "🎁",
+                    title: "Exclusive Deals",
+                    text: "App-only offers",
+                  },
+                  {
+                    icon: "📍",
+                    title: "Live Tracking",
+                    text: "Track every order",
+                  },
+                  {
+                    icon: "❤️",
+                    title: "Your Favorites",
+                    text: "Always within reach",
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.2 + index * 0.08,
+                    }}
+                    className="flex items-center gap-3"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-lg">
+                      {item.icon}
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-semibold text-white">
+                        {item.title}
+                      </p>
+
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {item.text}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Download Buttons */}
+              <div className="flex flex-wrap items-center gap-4">
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group flex items-center gap-3 px-5 py-3 rounded-xl bg-white text-black shadow-lg shadow-black/20 transition"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="w-7 h-7"
+                    fill="currentColor"
+                  >
+                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.1.81 1.21-.25 2.37-.94 3.66-.84 1.55.12 2.72.74 3.49 1.9-3.2 1.92-2.44 6.13.49 7.31-.59 1.55-1.36 3.09-2.74 3.79zM12.03 7.25C11.88 4.94 13.75 3.04 15.9 2.9c.3 2.67-2.44 4.65-3.87 4.35z" />
+                  </svg>
+
+                  <div className="text-left leading-tight">
+                    <span className="block text-[10px] uppercase tracking-wide text-gray-500">
+                      Download on the
+                    </span>
+
+                    <span className="block text-base font-bold">App Store</span>
+                  </div>
+                </motion.a>
+
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="group flex items-center gap-3 px-5 py-3 rounded-xl border border-white/20 bg-white/[0.06] text-white backdrop-blur-md transition"
+                >
+                  <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
+                    <path
+                      d="M3.5 2.8L13.9 12 3.5 21.2C3.18 20.82 3 20.28 3 19.55V4.45C3 3.72 3.18 3.18 3.5 2.8Z"
+                      fill="#34A853"
+                    />
+
+                    <path
+                      d="M17.5 8.8L13.9 12 3.5 2.8C4 2.35 4.75 2.25 5.5 2.65L17.5 8.8Z"
+                      fill="#FBBC04"
+                    />
+
+                    <path
+                      d="M17.5 15.2L5.5 21.35C4.75 21.75 4 21.65 3.5 21.2L13.9 12L17.5 15.2Z"
+                      fill="#4285F4"
+                    />
+
+                    <path
+                      d="M21 10.6C21.65 10.95 21.65 13.05 21 13.4L17.5 15.2L13.9 12L17.5 8.8L21 10.6Z"
+                      fill="#EA4335"
+                    />
+                  </svg>
+
+                  <div className="text-left leading-tight">
+                    <span className="block text-[10px] uppercase tracking-wide text-gray-400">
+                      Get it on
+                    </span>
+
+                    <span className="block text-base font-bold">
+                      Google Play
+                    </span>
+                  </div>
+                </motion.a>
+              </div>
+            </motion.div>
+
+            {/* ━━━ Right Visual ━━━ */}
+            <motion.div
+              initial={{ opacity: 0, x: 60, scale: 0.96 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="relative flex justify-center lg:justify-end"
+            >
+              {/* Glow behind image */}
+              <div className="absolute w-[280px] sm:w-[420px] h-[280px] sm:h-[420px] bg-orange-500/20 rounded-full blur-[100px]" />
+
+              {/* Image Card */}
+              <motion.div
+                animate={{
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="relative"
+              >
+                <div className="absolute -inset-1 rounded-[28px] bg-gradient-to-r from-orange-500/30 to-amber-400/20 blur-xl opacity-60" />
+
+                <img
+                  src="/wide_modern_promotional_landing_page_style_banner.png"
+                  alt="Food delivery mobile application"
+                  className="
+              relative
+              w-full
+              max-w-[700px]
+              rounded-[24px]
+              object-cover
+              border border-white/10
+              shadow-2xl
+              shadow-black/50
+            "
+                />
+              </motion.div>
+
+              {/* Floating Delivery Badge */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                animate={{
+                  y: [0, -8, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="
+            absolute
+            -bottom-5
+            left-2
+            sm:left-4
+            lg:left-0
+            flex
+            items-center
+            gap-3
+            px-4
+            py-3
+            rounded-2xl
+            bg-[#17191d]/95
+            backdrop-blur-xl
+            border
+            border-white/10
+            shadow-xl
+          "
+              >
+                <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center">
+                  <span className="text-lg">🚴</span>
+                </div>
+
+                <div>
+                  <p className="text-[11px] text-gray-500">Delivery Status</p>
+
+                  <p className="text-sm font-bold text-white">
+                    On the way • 12 min
+                  </p>
+                </div>
+
+                <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
+              </motion.div>
+
+              {/* Floating Rating */}
+              <motion.div
+                animate={{
+                  y: [0, 8, 0],
+                }}
+                transition={{
+                  duration: 4.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="
+            absolute
+            -top-4
+            right-2
+            sm:right-5
+            lg:right-0
+            px-4
+            py-3
+            rounded-2xl
+            bg-white
+            shadow-2xl
+            flex
+            items-center
+            gap-2
+          "
+              >
+                <span className="text-xl">⭐</span>
+
+                <div>
+                  <p className="text-sm font-bold text-gray-900">4.9/5</p>
+
+                  <p className="text-[10px] text-gray-500">Loved by foodies</p>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

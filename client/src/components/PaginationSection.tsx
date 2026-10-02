@@ -10,10 +10,18 @@ import {
 type Props = {
   page: number;
   pages: number;
-  onPageChange: (pageNum:number) => void;
+  onPageChange: (pageNum: number) => void;
 };
 
-const PaginationSection = ({ page, pages, onPageChange }: Props) => {
+const PaginationSection = ({
+  page,
+  pages,
+  onPageChange,
+}: Props) => {
+  if (!pages || pages <= 1) {
+    return null;
+  }
+
   const pageNumbers = [];
 
   for (let i = 1; i <= pages; i++) {
@@ -21,37 +29,63 @@ const PaginationSection = ({ page, pages, onPageChange }: Props) => {
   }
 
   return (
-    <Pagination className="mb-4">
-      <PaginationContent>
+    <div className="flex justify-center">
+      <div className="inline-flex bg-white border border-gray-100 rounded-2xl shadow-sm p-1.5">
+        <Pagination>
+          <PaginationContent className="gap-1">
+            {page !== 1 && (
+              <PaginationItem>
+                <PaginationPrevious
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onPageChange(page - 1);
+                  }}
+                  className="rounded-xl hover:bg-orange-50 hover:text-orange-500"
+                />
+              </PaginationItem>
+            )}
 
-        {page !== 1 && (
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              onClick={() => onPageChange(page - 1)}
-            />
-          </PaginationItem>
-        )}
+            {pageNumbers.map((num) => (
+              <PaginationItem key={num}>
+                <PaginationLink
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onPageChange(num);
+                  }}
+                  isActive={page === num}
+                  className={`
+                    rounded-xl
+                    font-semibold
+                    ${
+                      page === num
+                        ? "bg-orange-500 text-white hover:bg-orange-600 hover:text-white"
+                        : "hover:bg-orange-50 hover:text-orange-500"
+                    }
+                  `}
+                >
+                  {num}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
 
-        {pageNumbers.map((num, index) => (
-          <PaginationItem key={index}>
-            <PaginationLink
-              href="#"
-              onClick={() => onPageChange(num)}
-              isActive={page === num}
-            >
-              {num}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
-
-        {page !== pageNumbers.length && (
-          <PaginationItem>
-            <PaginationNext href="#" onClick={() => onPageChange(page + 1)} />
-          </PaginationItem>
-        )}
-      </PaginationContent>
-    </Pagination>
+            {page !== pages && (
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onPageChange(page + 1);
+                  }}
+                  className="rounded-xl hover:bg-orange-50 hover:text-orange-500"
+                />
+              </PaginationItem>
+            )}
+          </PaginationContent>
+        </Pagination>
+      </div>
+    </div>
   );
 };
 

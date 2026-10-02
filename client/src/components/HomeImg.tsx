@@ -39,7 +39,7 @@ const HomeImg = () => {
   };
 
   return (
-    <div className="relative w-full min-h-[92vh] flex items-center justify-center overflow-hidden">
+    <div className="relative w-full min-h-[100vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -128,7 +128,7 @@ const HomeImg = () => {
             <span className="relative z-10">Explore Now 🚀</span>
           </button>
           <button
-            onClick={() => navigate("/search/India")}
+            onClick={() => navigate("/search/kannur")}
             className="bg-white/10 backdrop-blur-md border border-white/20 text-white text-lg font-semibold py-3 px-8 rounded-full shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105"
           >
             Browse All 🍽️
