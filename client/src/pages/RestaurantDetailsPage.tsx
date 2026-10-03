@@ -148,7 +148,7 @@ const RestaurantDetailsPage = () => {
               <div className="relative h-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg">
                 <img
                   src={restaurant.imageUrl}
-                  alt={restaurant.name}
+                  alt={restaurant.restaurantName}
                   className="w-full h-full object-cover"
                 />
 
@@ -170,7 +170,7 @@ const RestaurantDetailsPage = () => {
                   </p>
 
                   <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight">
-                    {restaurant.name}
+                    {restaurant.restaurantName}
                   </h1>
                 </div>
               </div>

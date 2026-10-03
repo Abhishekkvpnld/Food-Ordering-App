@@ -16,7 +16,6 @@ import {
   Camera,
   CheckCircle2,
   ImagePlus,
-  MapPin,
   Save,
   Sparkles,
   Store,

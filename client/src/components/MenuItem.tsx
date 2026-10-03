@@ -16,6 +16,9 @@ type Props = {
 };
 
 const MenuItem = ({ restaurant, addToCart }: Props) => {
+
+  console.log(restaurant.menuItems)
+
   return (
     <div className="mt-2">
       {/* Menu Header */}
@@ -37,13 +40,13 @@ const MenuItem = ({ restaurant, addToCart }: Props) => {
         </div>
 
         <span className="hidden sm:block text-sm text-gray-400">
-          {restaurant.menuItems.length} items
+          {restaurant?.menuItems?.length} items
         </span>
       </div>
 
       {/* Menu Items */}
       <div className="space-y-4">
-        {restaurant.menuItems.map((item, index) => (
+        {restaurant?.menuItems?.map((item, index) => (
           <motion.div
             key={item._id || index}
             initial={{
@@ -86,10 +89,10 @@ const MenuItem = ({ restaurant, addToCart }: Props) => {
                       FOOD IMAGE
                   ========================================= */}
                   <div className="relative shrink-0">
-                    {item.image ? (
+                    {item?.imageUrl ? (
                       <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden bg-gray-100">
                         <img
-                          src={item.image}
+                          src={item.imageUrl}
                           alt={item.name}
                           className="
                             w-full
@@ -143,7 +146,7 @@ const MenuItem = ({ restaurant, addToCart }: Props) => {
 
                     {/* Description */}
                     <p className="text-sm text-gray-500 leading-relaxed mt-2 line-clamp-2">
-                      {item.description ||
+                      {item?.details ||
                         "Freshly prepared with quality ingredients and delicious flavors. A perfect choice for your next meal."}
                     </p>
 

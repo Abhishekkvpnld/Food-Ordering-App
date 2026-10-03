@@ -12,7 +12,6 @@ import {
   ClipboardList,
   Clock3,
   LayoutDashboard,
-  Plus,
   Store,
   UtensilsCrossed,
 } from "lucide-react";

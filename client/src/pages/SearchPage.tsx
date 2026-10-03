@@ -9,7 +9,6 @@ import { useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import {
   ChevronRight,
-  Filter,
   MapPin,
   SearchX,
   SlidersHorizontal,

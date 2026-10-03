@@ -1,13 +1,7 @@
 import { CartItems as CartItemsType } from "@/pages/RestaurantDetailsPage";
 import { Restaurant } from "@/types";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "./ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Separator } from "./ui/separator";
-import { MdOutlineDeleteOutline } from "react-icons/md";
 import CheckoutButton from "./CheckoutButton";
 import { UserFormData } from "@/form/user-profile-form/UserProfileForm";
 import { useCreateCheckoutSession } from "@/api/OrderApi";
@@ -26,34 +20,25 @@ type Props = {
   removeFromCart: (item: CartItemsType) => void;
 };
 
-const OrderCart = ({
-  restaurant,
-  cartItems,
-  removeFromCart,
-}: Props) => {
-  const {
-    createCheckoutSession,
-    isLoading: isCheckoutLoading,
-  } = useCreateCheckoutSession();
+const OrderCart = ({ restaurant, cartItems, removeFromCart }: Props) => {
+  const { createCheckoutSession, isLoading: isCheckoutLoading } =
+    useCreateCheckoutSession();
 
   const subtotal = cartItems.reduce(
-    (total, cartItem) =>
-      total + cartItem.price * cartItem.quantity,
-    0
+    (total, cartItem) => total + cartItem.price * cartItem.quantity,
+    0,
   );
 
-  const deliveryCharge = restaurant.deliveryPrice;
+  const deliveryCharge = Number(restaurant.deliveryPrice);
 
   const totalPrice = subtotal + deliveryCharge;
 
   const totalItems = cartItems.reduce(
     (total, item) => total + item.quantity,
-    0
+    0,
   );
 
-  const onCheckout = async (
-    userFormData: UserFormData
-  ) => {
+  const onCheckout = async (userFormData: UserFormData) => {
     if (!restaurant || cartItems.length === 0) {
       return;
     }
@@ -126,9 +111,7 @@ const OrderCart = ({
           {/* Total badge */}
           {cartItems.length > 0 && (
             <div className="text-right">
-              <p className="text-xs text-gray-400">
-                Total
-              </p>
+              <p className="text-xs text-gray-400">Total</p>
 
               <p className="text-xl font-extrabold text-orange-500">
                 ₹{totalPrice.toFixed(2)}
@@ -155,13 +138,10 @@ const OrderCart = ({
               <ShoppingBag className="w-7 h-7 text-orange-400" />
             </div>
 
-            <h3 className="font-bold text-gray-900">
-              Your cart is empty
-            </h3>
+            <h3 className="font-bold text-gray-900">Your cart is empty</h3>
 
             <p className="text-sm text-gray-500 mt-1 max-w-[220px] mx-auto">
-              Add some delicious dishes from the menu to
-              get started.
+              Add some delicious dishes from the menu to get started.
             </p>
 
             <div className="flex items-center justify-center gap-1.5 mt-4 text-xs text-orange-500 font-medium">
@@ -246,18 +226,13 @@ const OrderCart = ({
                     {/* Item Total */}
                     <div className="text-right shrink-0">
                       <p className="font-bold text-gray-900 text-sm">
-                        ₹
-                        {(
-                          item.price * item.quantity
-                        ).toFixed(2)}
+                        ₹{(item.price * item.quantity).toFixed(2)}
                       </p>
 
                       {/* Delete */}
                       <button
                         type="button"
-                        onClick={() =>
-                          removeFromCart(item)
-                        }
+                        onClick={() => removeFromCart(item)}
                         className="
                           mt-1
                           inline-flex
@@ -290,9 +265,7 @@ const OrderCart = ({
               <div className="space-y-3 pt-5">
                 {/* Subtotal */}
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">
-                    Subtotal
-                  </span>
+                  <span className="text-gray-500">Subtotal</span>
 
                   <span className="font-semibold text-gray-800">
                     ₹{subtotal.toFixed(2)}
@@ -304,9 +277,7 @@ const OrderCart = ({
                   <div className="flex items-center gap-2">
                     <Bike className="w-4 h-4 text-blue-500" />
 
-                    <span className="text-gray-500">
-                      Delivery Charge
-                    </span>
+                    <span className="text-gray-500">Delivery Charge</span>
                   </div>
 
                   <span className="font-semibold text-gray-800">
@@ -363,9 +334,7 @@ const OrderCart = ({
           <div className="flex items-center justify-center gap-1.5 text-[11px] text-gray-400">
             <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
 
-            <span>
-              Secure checkout • Safe & reliable payment
-            </span>
+            <span>Secure checkout • Safe & reliable payment</span>
           </div>
         </CardFooter>
       )}
@@ -374,4 +343,3 @@ const OrderCart = ({
 };
 
 export default OrderCart;
-
